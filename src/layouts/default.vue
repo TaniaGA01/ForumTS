@@ -5,7 +5,7 @@ import Header from '../layouts/global/Header.vue';
 <template>
     <Header />
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-20">
-        <div class="mx-auto max-w-3xl">
+        <div class="mx-auto max-w-5xl">
             <slot />
         </div>
     </div>

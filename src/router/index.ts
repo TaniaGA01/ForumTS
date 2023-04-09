@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import sourceData from '@/data/data.json'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -7,16 +7,34 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => import('@/views/HomeView.vue')
+    },
+    {
+      path: '/thread/:id',
+      name: 'threadShow',
+      component: () => import('@/components/ThreadShowPage.vue'),
+      beforeEnter(to) { // Page not found without changing url
+        const threadExists = sourceData.threads.find(thread => thread.id === to.params.id)
+        if (!threadExists) {
+          return {
+            name: 'NotFound',
+            params: { pathMatch: to.path.substring(1).split('/') },
+            query: to.query,
+            hash: to.hash,
+          }
+        }
+      }
     },
     {
       path: '/category',
       name: 'category',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/CategoryView.vue')
-    }
+    },
+    { 
+      path: '/:pathMatch(.*)*', 
+      name: 'NotFound', 
+      component: () => import('@/components/PageNotFound.vue')
+    },
   ]
 })
 

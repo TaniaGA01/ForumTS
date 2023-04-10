@@ -12,7 +12,7 @@ const router = createRouter({
     {
       path: '/thread/:id',
       name: 'threadShow',
-      component: () => import('@/components/ThreadShowPage.vue'),
+      component: () => import('@/pages/ThreadShow.vue'),
       beforeEnter(to) { // Page not found without changing url
         const threadExists = sourceData.threads.find(thread => thread.id === to.params.id)
         if (!threadExists) {
@@ -33,7 +33,7 @@ const router = createRouter({
     { 
       path: '/:pathMatch(.*)*', 
       name: 'NotFound', 
-      component: () => import('@/components/PageNotFound.vue')
+      component: () => import('@/pages/NotFound.vue')
     },
   ]
 })

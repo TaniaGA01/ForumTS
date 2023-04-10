@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import ThreadList from './ThreadList.vue';
-import type { ThreadI, PostI, UserI } from '../data/data.interfaces'
-import sourceData from '../data/data.json'
+import ThreadList from '@/components/ThreadList.vue';
+import type { ThreadI, PostI, UserI } from '@/data/data.interfaces'
+import sourceData from '@/data/data.json'
 import { reactive } from 'vue';
 
 const threads = reactive<ThreadI[]>(sourceData.threads)

@@ -35,9 +35,9 @@ export interface PostI {
 }
 
 export interface EditedI {
-    at:        number;
-    by:        string;
-    moderated: boolean;
+    at?:        number;
+    by?:        string;
+    moderated?: boolean;
 }
 
 export interface ReactionsI {

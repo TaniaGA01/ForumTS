@@ -5,42 +5,37 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-const props = defineProps({
-    thread: Object,
-    posts: Object
-});
-
-const emitNewPost = defineEmits(["newPostData", "data"])
-const newPostData = (addPostMethod: unknown) => {
-    emitNewPost("newPostData", addPostMethod)
-}
+const emit = defineEmits([
+    "newPostData", "data"
+])
 
 let newPostText = ''
 
-// const addPost = (): void => {
-const newPostId = "abc" + Math.random()
-const editedData: EditedI = {
-    at: 0,
-    by: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
-    moderated: false,
+const save = (): void => {
+    const newPostId = "abc" + Math.random()
+    const editedData: EditedI = {
+        at: 0,
+        by: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
+        moderated: false,
+    }
+    const newPost: PostI = reactive({
+        edited: editedData,
+        id: newPostId,
+        publishedAt: Math.floor(Date.now() / 1000),// date in seconds
+        text: newPostText,
+        threadId: route.params.id as string,
+        userId: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
+        reactions: undefined
+    }
+    )
+    emit("newPostData", newPost)
+    newPostText = ''
 }
-const newPost: PostI = reactive({
-    edited: editedData,
-    id: newPostId,
-    publishedAt: Math.floor(Date.now() / 1000),// date in seconds
-    text: newPostText,
-    threadId: route.params.id as string,
-    userId: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
-    reactions: undefined
-}
-)
 
-//     newPostText = ''
-// }
 </script>
 <template>
     <div class="bg-white mt-3 shadow-md">
-        <Form @submit.prevent="newPostData(newPost)" method="POST" class="mx-auto mt-16 max-w-2xl sm:mt-5 py-20">
+        <Form @submit.prevent="save" method="POST" class="mx-auto mt-16 max-w-2xl sm:mt-5 py-20">
             <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                 <div class="sm:col-span-2">
                     <label for="message" class="block text-sm font-semibold leading-6 text-slate-900">Your

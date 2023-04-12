@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import type { PostI, EditedI } from '@/data/data.interfaces'
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-const emit = defineEmits([
-    "newPostData", "data"
-])
+const emit = defineEmits(["newPostData", "data"])
 
-let newPostText = ''
+let newPostText = ref('')
 
 const save = (): void => {
     const newPostId = "abc" + Math.random()
@@ -26,10 +24,9 @@ const save = (): void => {
         threadId: route.params.id as string,
         userId: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
         reactions: undefined
-    }
-    )
+    })
     emit("newPostData", newPost)
-    newPostText = ''
+    newPostText.value = ""
 }
 
 </script>

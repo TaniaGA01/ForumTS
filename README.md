@@ -25,4 +25,12 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Others infos
+
+### auto import all components in the components directory.
+```
+https://github.com/antfu/unplugin-vue-components
+see vite.config.ts plugins
+```
 # ForumTS

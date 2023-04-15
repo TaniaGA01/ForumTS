@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import PostsList from '@/components/PostsList.vue'
-import PostEditor from '@/components/PostEditor.vue';
 import type { ThreadI, PostI, UserI } from '@/data/data.interfaces'
 import sourceData from '@/data/data.json'
 import { computed, reactive } from 'vue';

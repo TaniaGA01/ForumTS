@@ -6,9 +6,10 @@ import router from './router'
 
 import '@/assets/main.css'
 
-const app = createApp(App)
+const forumApp = createApp(App)
 
-app.use(createPinia())
-app.use(router)
+forumApp.use(createPinia())
+forumApp.use(router)
 
-app.mount('#app')
+
+forumApp.mount('#app')

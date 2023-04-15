@@ -42,14 +42,14 @@ const userById = (userId: undefined | string) => {
                                 <p class="mt-2 flex items-center  text-gray-500 sm:mt-0 sm:ml-6">
                                     <CalendarIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
 
-                                    <time>{{ thread.publishedAt }}</time>
+                                    <AppDate :timestamp="thread.publishedAt" />
                                 </p>
                             </div>
                             <div class="mt-2 flex items-center  text-gray-500 sm:mt-0 w-60">
                                 <img :src="userById(thread.userId)?.avatar" class="h-10 w-10 rounded-full mr-2" />
                                 <div class="grid">
                                     <a href="#"><small>{{ userById(thread.userId)?.name }}</small></a>
-                                    <time>{{ thread.publishedAt }}</time>
+                                    <AppDate :timestamp="thread.publishedAt" />
                                 </div>
                             </div>
                         </div>

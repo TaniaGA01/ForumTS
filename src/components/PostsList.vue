@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import dayjs from "dayjs"
-import relativeTime from 'dayjs/plugin/relativeTime'
-import localizedDate from 'dayjs/plugin/localizedFormat'
-dayjs.extend(relativeTime)
-dayjs.extend(localizedDate)
-
 const props = defineProps({
     threadPosts: Object,
     users: Object
@@ -13,15 +7,6 @@ const props = defineProps({
 const userById = (userId: undefined | string) => {
     return props.users?.find((user: { id: string | undefined; }) => user.id === userId)
 }
-
-const diffForHumans = (timestamp: number) => { // converting date
-    return dayjs.unix(timestamp).fromNow()
-}
-
-const humanFriendlyDate = (timestamp: number) => {// date title
-    return dayjs.unix(timestamp).format('llll')
-}
-
 </script>
 <template>
     <div v-for="threadPost in props.threadPosts" :key="threadPost.threadId">
@@ -33,10 +18,8 @@ const humanFriendlyDate = (timestamp: number) => {// date title
             </div>
             <div class="col-span-5">
                 <p class="break-all">{{ threadPost.text }}</p>
-                <div class="text-right mt-5">
-                    <small class="break-all text-slate-600" :title="humanFriendlyDate(threadPost.publishedAt)">
-                        {{ diffForHumans(threadPost.publishedAt) }}
-                    </small>
+                <div class="text-right mt-5 break-all text-slate-600">
+                    <AppDate :timestamp="threadPost.publishedAt" />
                 </div>
             </div>
         </div>

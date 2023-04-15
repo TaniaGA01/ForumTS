@@ -31,7 +31,7 @@ const save = (): void => {
 
 </script>
 <template>
-    <div class="bg-white mt-3 shadow-md">
+    <div class="bg-slate-200 mt-3 shadow-md">
         <Form @submit.prevent="save" method="POST" class="mx-auto mt-16 max-w-2xl sm:mt-5 py-20">
             <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                 <div class="sm:col-span-2">

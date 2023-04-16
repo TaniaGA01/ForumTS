@@ -26,6 +26,12 @@ const router = createRouter({
       }
     },
     {
+      path: '/forum/:id',
+      name:'Forum',
+      component: () => import('@/pages/Forum.vue')
+
+    },
+    {
       path: '/category',
       name: 'category',
       component: () => import('../views/CategoryView.vue')

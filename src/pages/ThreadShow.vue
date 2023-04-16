@@ -19,13 +19,13 @@ const addPost = (eventData: any): void => {
     posts.push(newPost)
     thread.value?.posts.push(newPost.id)
 }
-
 </script>
 
 <template>
     <div>
-        <h1 class="text-3xl uppercase mt-20 font-bold text-slate-600">{{ thread?.title }}</h1>
-        <PostsList :threadPosts="threadPosts" :users="users" />
-        <PostEditor @newPostData="addPost" />
+        <h1 class="text-3xl mt-12 font-bold text-slate-600">{{ thread?.title }}</h1>
+        <hr class="mt-2 mb-12">
     </div>
+    <PostsList :threadPosts="threadPosts" :users="users" />
+    <PostEditor @newPostData="addPost" />
 </template>

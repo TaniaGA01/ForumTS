@@ -35,7 +35,7 @@ const save = (): void => {
         <Form @submit.prevent="save" method="POST" class="mx-auto mt-16 max-w-2xl sm:mt-5 py-20">
             <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                 <div class="sm:col-span-2">
-                    <label for="message" class="block text-sm font-semibold leading-6 text-slate-900">Your
+                    <label for="message" class="block text-md font-semibold leading-6 text-slate-800">Your
                         comment</label>
                     <div class="mt-2.5">
                         <textarea v-model="newPostText" name="message" id="message" rows="4"
@@ -45,7 +45,7 @@ const save = (): void => {
             </div>
             <div class="mt-10">
                 <button
-                    class="block w-full rounded-md bg-fuchsia-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-fuchsia-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-600">Add
+                    class="block w-full bg-violet-500 rounded-lg px-3.5 py-2.5 text-center text-md font-semibold text-white shadow-sm hover:bg-violet-600  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Add
                     your comment</button>
             </div>
         </Form>

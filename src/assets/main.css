@@ -9,9 +9,9 @@
         /* font-style: italic; */
         font-size: 100;
     }
-    a{
-        color:theme('colors.fuchsia.700')
-    }
+    /* a{
+        color:theme('colors.purple.500')
+    } */
 }
 @tailwind base;
 @tailwind components;

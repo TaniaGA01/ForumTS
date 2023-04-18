@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('@/views/HomeView.vue')
+      component: () => import('@/pages/Home.vue')
     },
     {
       path: '/thread/:id',
@@ -32,9 +32,9 @@ const router = createRouter({
 
     },
     {
-      path: '/category',
+      path: '/category/:id',
       name: 'category',
-      component: () => import('../views/CategoryView.vue')
+      component: () => import('@/pages/Category.vue')
     },
     { 
       path: '/:pathMatch(.*)*', 

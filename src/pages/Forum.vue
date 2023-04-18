@@ -9,6 +9,7 @@ const forumsData = reactive<ForumElementI[]>(sourceData.forums)
 const threadsData = reactive<ThreadI[]>(sourceData.threads)
 const users = reactive<UserI[]>(sourceData.users)
 
+
 const route = useRoute()
 const forum = computed(() => forumsData.find(forum => forum.id === route.params.id));
 const threads = computed(() => threadsData.filter(thread => thread.forumId === route.params.id))
@@ -51,7 +52,7 @@ const breadcrumbs = [
     </div>
     <div class="flex justify-between mt-16">
         <div>
-            <h1 class="text-4xl font-semibold text-slate-700 uppercase">{{ forum?.name }}</h1>
+            <h1 class="text-4xl font-bold text-slate-700 uppercase">{{ forum?.name }}</h1>
         </div>
         <div>
             <a href="http://" 

@@ -18,10 +18,9 @@ const userById = (userId: undefined | string) => {
                     <div class="px-4 py-4 sm:px-6">
                         <div class="flex items-center justify-between">
                             <RouterLink :to="{ name: 'threadShow', params: { id: thread.id } }"
-                                class="truncate text-lg  text-slate-600 font-medium">
+                                class="truncate text-lg font-medium bg-orange-50 text-orange-600 border-orange-200 border py-0.5 px-1.5 rounded-md hover:bg-orange-100">
                                 {{ thread.title }}
                             </RouterLink>
-                            
                         </div>
                         <hr class="mt-2 border-dotted">
                         <div class="mt-2 sm:flex sm:justify-between align-text-top">
@@ -30,9 +29,9 @@ const userById = (userId: undefined | string) => {
                                     <UserCircleIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
                                     Par :
                                     <a href="#" 
-                                    class="bg-orange-50 text-orange-600 border-orange-200 border py-0.5 px-1.5 rounded-md ml-2
-                                    hover:bg-orange-100">
-                                        {{ userById(thread.userId)?.name }}
+                                    class="bg-fuchsia-50 text-fuchsia-600 border-fuchsia-200 border py-0.5 px-1.5 rounded-md ml-2
+                                    hover:bg-fuchsia-100">
+                                        <small>{{ userById(thread.userId)?.name }}</small>
                                     </a>
                                 </p>
                                 <p class="mt-2 flex items-center  text-gray-500 sm:mt-0 sm:ml-6">
@@ -40,7 +39,7 @@ const userById = (userId: undefined | string) => {
                                     <AppDate :timestamp="thread.publishedAt" />
                                 </p>
                             </div>
-                            <div class="mt-2 flex items-center  text-gray-500 sm:mt-0 w-1/3">
+                            <div class="mt-2 flex items-center  text-gray-500 sm:mt-0 w-2/5">
                                 <p
                                     class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800 sm:mr-5">
                                     <ArrowUturnRightIcon class="mr-1.5 h-4 w-4 flex-shrink-0" aria-hidden="true" />

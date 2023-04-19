@@ -18,7 +18,7 @@ const forumThreadWord = (forum: any) => {
 </script>
 <template>
     <RouterLink v-if="props.categoryId" :to="{name:'category', params:{id: props.categoryId}}" >
-        <h2 class="text-xl bg-fuchsia-800 py-5 px-7 text-white uppercase rounded-t-lg font-semibold mt-10">
+        <h2 class="text-xl bg-fuchsia-800 hover:bg-fuchsia-700 py-5 px-7 text-white uppercase rounded-t-lg font-semibold mt-10">
             {{ props.title }}
         </h2>
     </RouterLink>

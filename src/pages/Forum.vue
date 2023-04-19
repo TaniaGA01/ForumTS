@@ -50,11 +50,11 @@ const breadcrumbs = [
             </ol>
         </nav>
     </div>
-    <div class="flex justify-between mt-16">
+    <div class="sm:flex justify-between mt-16">
         <div>
             <h1 class="text-4xl font-bold text-slate-700 uppercase">{{ forum?.name }}</h1>
         </div>
-        <div>
+        <div class="hidden sm:block">
             <a href="http://" 
             class="bg-violet-500 hover:bg-violet-600 text-white py-2 px-3 rounded-lg">
                 Start a thread
@@ -62,6 +62,12 @@ const breadcrumbs = [
         </div>
     </div>
     <hr class="m-2">
-    <h2 class="text-xl text-slate-500 mb-16">{{ forum?.description }}</h2>
+    <h2 class="text-xl text-slate-500 sm:mb-16">{{ forum?.description }}</h2>
+    <div class="block sm:hidden my-12">
+            <a href="http://" 
+            class="bg-violet-500 hover:bg-violet-600 text-white py-2 px-3 rounded-lg ">
+                Start a thread
+            </a>
+        </div>
     <ThreadList :threads="threads" :users="users" />
 </template>

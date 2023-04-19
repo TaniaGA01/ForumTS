@@ -39,21 +39,22 @@ const userById = (userId: undefined | string) => {
                                     <AppDate :timestamp="thread.publishedAt" />
                                 </p>
                             </div>
-                            <div class="mt-2 flex items-center  text-gray-500 sm:mt-0 w-2/5">
+                            <div class="mt-2 sm:flex items-center  text-gray-500 sm:mt-0 sm:w-2/5">
                                 <p
-                                    class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800 sm:mr-5">
+                                    class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800 sm:mr-5 my-5" >
                                     <ArrowUturnRightIcon class="mr-1.5 h-4 w-4 flex-shrink-0" aria-hidden="true" />
                                     <timz>{{ thread.posts.length }} replies</timz>
                                 </p>
-                                <img :src="userById(thread.userId)?.avatar" class="h-10 w-10 rounded-full mr-2" />
-                                <div class="grid">
-                                    <a href="#" class="bg-violet-50 text-violet-600 border-violet-200 border py-0.5 px-1.5 rounded-md ml-2
-                                    hover:bg-violet-100">
-                                        <small>
-                                            {{ userById(thread.userId)?.name }}
-                                        </small>
-                                    </a>
-                                    <AppDate :timestamp="thread.publishedAt" class="ml-3" />
+                                <div class="flex">
+                                    <img :src="userById(thread.userId)?.avatar" class="h-10 w-10 rounded-full mr-2" />
+                                    <div class="grid">
+                                        <a href="#" class="bg-violet-50 text-violet-600 border-violet-200 border py-0.5 px-1.5 rounded-md ml-2 hover:bg-violet-100">
+                                            <small>
+                                                {{ userById(thread.userId)?.name }}
+                                            </small>
+                                        </a>
+                                        <AppDate :timestamp="thread.publishedAt" class="ml-3 hidden sm:block" />
+                                    </div>
                                 </div>
                             </div>
                         </div>

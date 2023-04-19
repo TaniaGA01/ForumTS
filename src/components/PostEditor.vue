@@ -46,7 +46,8 @@ const save = (): void => {
             <div class="mt-10">
                 <button
                     class="block w-full bg-violet-500 rounded-lg px-3.5 py-2.5 text-center text-md font-semibold text-white shadow-sm hover:bg-violet-600  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Add
-                    your comment</button>
+                    your comment
+                </button>
             </div>
         </Form>
     </div>

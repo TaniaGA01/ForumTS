@@ -14,7 +14,6 @@ const category1 = categories.find(category => category.id === route.params.id)
 const getForumsForCategorie = (category:any) => {
     return forumsData.filter(forum => forum.categoryId === category.id)
 }
-
 </script>
 <template>
     <div>

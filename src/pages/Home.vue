@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import type { CategoryI} from '@/data/data.interfaces'
-import sourceData from '@/data/data.json'
-import { reactive } from 'vue';
-
-const categories = reactive<CategoryI[]>(sourceData.categories) as object
-
+import { UseCategoriesStore } from '@/stores/Categories.store';
+import { storeToRefs } from 'pinia';
+const { categories } = storeToRefs(UseCategoriesStore())
 </script>
 
 <template>

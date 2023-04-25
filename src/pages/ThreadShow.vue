@@ -1,23 +1,26 @@
 <script setup lang="ts">
-import type { ThreadI, PostI, UserI } from '@/data/data.interfaces'
-import sourceData from '@/data/data.json'
-import { computed, reactive } from 'vue';
+import type { PostI } from '@/data/data.interfaces'
+import { computed } from 'vue';
 import { useRoute } from 'vue-router'
-
-const threads = reactive<ThreadI[]>(sourceData.threads)
-const posts = reactive<PostI[]>(sourceData.posts)
-const users = reactive<UserI[]>(sourceData.users)
+import { UseThreadsStore } from '@/stores/Threads.store'
+import { UsePostsStore } from '@/stores/Posts.store'
+import { UseUserStore } from '@/stores/Users.store'
 
 const route = useRoute()
-const thread = computed(() => threads.find(thread => thread.id === route.params.id));
-const threadPosts = computed(() => posts.filter(post => post.threadId === route.params.id))
 
-const addPost = (eventData: any): void => {
+const threadsStore = UseThreadsStore()
+const thread = computed(() => threadsStore.threads.find(thread => thread.id === route.params.id))
+
+const postsStore = UsePostsStore()
+const threadPosts = computed(() => postsStore.posts.filter(post => post.threadId === route.params.id))
+
+const usersStore = UseUserStore()
+
+const addPost = (eventData: PostI): void => {
     const newPost = {
         ...eventData
     }
-    posts.push(newPost)
-    thread.value?.posts.push(newPost.id)
+    postsStore.createPost(newPost)
 }
 </script>
 
@@ -26,6 +29,6 @@ const addPost = (eventData: any): void => {
         <h1 class="text-3xl mt-12 font-bold text-slate-600">{{ thread?.title }}</h1>
         <hr class="mt-2 mb-12">
     </div>
-    <PostsList :threadPosts="threadPosts" :users="users" />
+    <PostsList :threadPosts="threadPosts" :users="usersStore.users" />
     <PostEditor @newPostData="addPost" />
 </template>

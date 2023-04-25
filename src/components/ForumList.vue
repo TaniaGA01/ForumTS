@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ArrowUturnRightIcon } from '@heroicons/vue/20/solid'
+import type { ForumElementI } from '@/data/data.interfaces'
 
 const props = defineProps({
     forums: Object,
@@ -7,7 +8,7 @@ const props = defineProps({
     categoryId:String
 });
 
-const forumThreadWord = (forum: any) => {
+const forumThreadWord = (forum: ForumElementI) => {
     if (forum.threads?.length) {
         return forum.threads.length as number > 1 ? `threads` : `thread`
     } else {

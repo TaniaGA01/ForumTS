@@ -1,4 +1,3 @@
-
 <script setup lang="ts">
 import type { ForumElementI, CategoryI } from '@/data/data.interfaces'
 import sourceData from '@/data/data.json'

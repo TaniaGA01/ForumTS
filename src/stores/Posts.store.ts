@@ -17,7 +17,6 @@ export const UsePostsStore = defineStore('PostsStore', {
             post.id = 'ggg' + Math.random()
             this.posts.push(post)
             const thread = UseThreadsStore().threads.find(thread => thread.id === post.threadId)
-            console.log(thread)
             thread?.posts.push(post.id)
         }
     }

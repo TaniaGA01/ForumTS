@@ -2,6 +2,7 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue"
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { RouterLink } from 'vue-router'
+import { UseUserStore } from '@/stores/Users.store'
 
 const navigation = [
     { name: 'Home', href: '/', current: true },
@@ -9,6 +10,8 @@ const navigation = [
     { name: 'Forum', href: '#', current: false },
     { name: 'Thread', href: '#', current: false },
 ]
+const usersStore = UseUserStore()
+const user = usersStore.authUser()
 </script>
 <template>
     <Disclosure as="nav" class="bg-fuchsia-800" v-slot="{ open }">
@@ -51,11 +54,12 @@ const navigation = [
                     <Menu as="div" class="relative ml-3">
                         <div>
                             <MenuButton
-                                class="flex rounded-full bg-fuchsia-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-fuchsia-800">
+                                class="flex items-center rounded-full bg-fuchsia-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-fuchsia-800">
                                 <span class="sr-only">Open user menu</span>
                                 <img class="h-8 w-8 rounded-full"
-                                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                    alt="" />
+                                    :src="user?.avatar"
+                                    :alt="`${user?.name} profil picture`" />
+                                <span class="text-white ml-2">{{ user?.name }}</span>
                             </MenuButton>
                         </div>
                         <transition enter-active-class="transition ease-out duration-100"

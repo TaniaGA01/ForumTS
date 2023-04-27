@@ -16,6 +16,7 @@ const threadPosts = computed(() => postsStore.posts.filter(post => post.threadId
 
 const usersStore = UseUserStore()
 
+
 const addPost = (eventData: PostI): void => {
     const newPost = {
         ...eventData

@@ -10,7 +10,7 @@ const categories = reactive<CategoryI[]>(sourceData.categories)
 
 const category1 = categories.find(category => category.id === route.params.id)
 
-const getForumsForCategorie = (category:any) => {
+const getForumsForCategorie = (category:CategoryI) => {
     return forumsData.filter(forum => forum.categoryId === category.id)
 }
 </script>
@@ -20,7 +20,7 @@ const getForumsForCategorie = (category:any) => {
         <hr class="mt-2 mb-12">
     </div>
     <ForumList 
-    :forums="getForumsForCategorie(category1)"
+    :forums="getForumsForCategorie(category1 as CategoryI)"
     :title="category1?.name"
     />
 </template>

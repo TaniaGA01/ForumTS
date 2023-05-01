@@ -2,7 +2,7 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue"
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { RouterLink } from 'vue-router'
-import { UseUserStore } from '@/stores/Users.store'
+import { UseUserAuthStore } from '@/stores/UserAuth.store'
 
 const navigation = [
     { name: 'Home', href: '/', current: true },
@@ -10,8 +10,8 @@ const navigation = [
     { name: 'Forum', href: '#', current: false },
     { name: 'Thread', href: '#', current: false },
 ]
-const usersStore = UseUserStore()
-const user = usersStore.authUser()
+const usersStore = UseUserAuthStore()
+const user = usersStore.authUser?.UserInfo
 </script>
 <template>
     <Disclosure as="nav" class="bg-fuchsia-800" v-slot="{ open }">

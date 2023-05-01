@@ -1050,7 +1050,9 @@
       "userId": "jVa6Go6Nl1Urkag1R2p9CHTf4ny1",
       "id": "-KvcyXMXqay-tm4mSboW"
     },
-    {
+    {"contributors": [
+      "NnooaWj4KHVxbhKwO1pEdfaQDsD2"
+    ],
       "firstPostId": "-Kvd3TvfJogbWreitADe",
       "forumId": "-Kvd1Vg_ankLYgrxC50F",
       "lastPostAt": 1597148818,

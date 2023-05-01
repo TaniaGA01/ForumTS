@@ -16,7 +16,7 @@ export const UseUserStore = defineStore('UserStore', {
     },
     actions:{
         authUser(){
-            return this.users.find( user => user.id === this.authId )
+            return this.users.find( user => user.id === this.authId)
         }
     }
 })

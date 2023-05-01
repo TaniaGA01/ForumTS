@@ -2,7 +2,7 @@
 import { UsersIcon, UserGroupIcon, ChatBubbleLeftRightIcon, ChatBubbleLeftEllipsisIcon } from '@heroicons/vue/24/outline'
 </script>
 <template>
-    <div class="flex gap-12 place-content-center">
+    <div class="block sm:flex gap-12 place-content-center">
         <div class="flex ">
             <UsersIcon class="w-6 mr-3 text-slate-400"/><span class="text-slate-700">47 users online</span>
         </div>

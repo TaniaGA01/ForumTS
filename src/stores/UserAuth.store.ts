@@ -1,13 +1,12 @@
 import { defineStore } from "pinia";
-import { reactive, ref } from "vue";
-import type { PostI, ThreadI, UserI } from '@/data/data.interfaces'
+import type { PostI, ThreadI, UserI, UserAthI } from '@/data/data.interfaces'
 import { UseThreadsStore } from "./Threads.store";
 import { UsePostsStore } from "./Posts.store";
 import { UseUserStore } from "@/stores/Users.store"
 
 export const UseUserAuthStore = defineStore('UserAuthStore', {
     state:() => {
-        const allUsers = reactive(UseUserStore())
+        const allUsers = UseUserStore()
         return{
             users: allUsers.users,
             // authId: 'jVa6Go6Nl1Urkag1R2p9CHTf4ny1'
@@ -16,7 +15,7 @@ export const UseUserAuthStore = defineStore('UserAuthStore', {
     },
     getters:{
         authUser: (state) => {
-            const user =  state.users.find(user => user.id === state.authId) as UserI
+            const user =  state.users.find(user => user.id === state.authId) as UserI | UserAthI
             if(!user) return null
 
             const threadsStore = UseThreadsStore()
@@ -24,7 +23,6 @@ export const UseUserAuthStore = defineStore('UserAuthStore', {
 
             return{
                 ...user,
-
                 get Threads(){
                     return threadsStore.threads.filter(thread => thread.userId === user.id) as ThreadI[]
                 },

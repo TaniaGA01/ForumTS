@@ -3,38 +3,35 @@ import { UseUserAuthStore } from '@/stores/UserAuth.store'
 import UserProfileCard from '@/components/UserPorfileCard.vue'
 import UserProfileCardEditor from '@/components/UserProfileCardEditor.vue'
 import type { UserAthI } from '@/data/data.interfaces'
-import { ref, reactive } from 'vue'
+import { storeToRefs } from 'pinia'
 
-const usersStore = reactive(UseUserAuthStore())
-const user = ref(usersStore.authUser as unknown as UserAthI)
+const { authUser } = storeToRefs(UseUserAuthStore());
 
 </script>
 <template>
     <div class="block sm:grid grid-flow-col gap-4 mt-12">
         <div class="row-span-1 ">
-            <!-- <UserProfileCard :userData="user?.UserInfo" :userThread="user?.Threads" :userPosts="user?.Posts"/> -->
-            <UserProfileCardEditor 
-                :user="user" :Threads="user.Threads" :Posts="user.Posts"
-            />
+            <UserProfileCard :user="authUser as UserAthI" />
+            <UserProfileCardEditor :user="authUser as UserAthI" />
         </div>
         <div class="col-span-5">
             <div class="block sm:flex place-content-between mb-5">
-                <h2 class="mb-5 sm:mb-0 text-slate-700 font-semibold text-2xl">{{ user.username }}'s recent activity</h2>
+                <h2 class="mb-5 sm:mb-0 text-slate-700 font-semibold text-2xl">{{ authUser?.username }}'s recent activity</h2>
                 <RouterLink to="http://" 
                 class="block bg-violet-500 rounded-lg px-3.5 py-2.5 text-center text-md font-semibold text-white shadow-sm hover:bg-violet-600  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">See only started threads?</RouterLink>
             </div>
             <hr class="mb-5">
-            <div v-for="post in user.Posts" :key="post.id" class="bg-white p-6 shadow mb-2 text-left">
+            <div v-for="post in authUser?.Posts" :key="post.id" class="bg-white p-6 shadow mb-2 text-left">
                 <div class="sm:flex">
                     <div class="sm:w-1/3 text-center">
-                        <h3 class="text-fuchsia-600 text-center text-lg font-semibold mb-5">{{ user?.name }}</h3>
+                        <h3 class="text-fuchsia-600 text-center text-lg font-semibold mb-5">{{ authUser?.name }}</h3>
                         <div class="h-16 w-16 rounded-full inline-flex overflow-scroll justify-center items-center">
                             <img
-                                :src="user.avatar"
-                                :alt="`${user.name} profil picture`" />
+                                :src="authUser?.avatar"
+                                :alt="`${authUser?.name} profil picture`" />
                         </div>
                         <div class="mt-5">
-                            <span class="text-slate-800">{{ user.Posts.length }} posts</span>
+                            <span class="text-slate-800">{{ authUser?.Posts.length }} posts</span>
                         </div>
                     </div>
                     <div class="sm:w-4/5 grid content-between">

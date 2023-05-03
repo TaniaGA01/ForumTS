@@ -1,24 +1,22 @@
 <script setup lang="ts">
-import type { UserI, ThreadI, PostI } from '@/data/data.interfaces'
+import type { UserAthI } from '@/data/data.interfaces'
 const props = defineProps<{
-    userThread: ThreadI[]
-    userPosts: PostI[],
-    userData: UserI
+    user: UserAthI,
 }>()
 </script>
 <template>
     <div class="bg-white grid place-content-center p-6 shadow">
         <div class="h-48 w-48 rounded-full inline-flex overflow-scroll justify-center items-center mb-5">
             <img class=""
-                :src="props.userData?.avatar"
-                :alt="`${props.userData?.name} profil picture`" />
+                :src="user.avatar"
+                :alt="`${user.name} profil picture`" />
         </div>
-        <h3 class="text-slate-600 ml-2 text-center text-2xl font-semibold mb-10">{{ props.userData?.name }}</h3>
-        <span class="text-slate-800 ml-2">{{ props.userData?.username }}</span>
-        <span class="text-slate-800 ml-2">{{ props.userData?.bio }}</span>
+        <h3 class="text-slate-600 ml-2 text-center text-2xl font-semibold mb-10">{{ user.name }}</h3>
+        <span class="text-slate-800 ml-2">{{ user.username }}</span>
+        <span class="text-slate-800 ml-2">{{ user.bio }}</span>
         <div class="flex place-content-between mt-9 mb-5">
-            <span class="text-slate-800 ml-2">{{ props.userPosts?.length }} posts</span>
-            <span class="text-slate-800 ml-2">{{ props.userThread?.length }} threads</span>
+            <span class="text-slate-800 ml-2">{{ user.Posts.length }} posts</span>
+            <span class="text-slate-800 ml-2">{{ user.Threads.length }} threads</span>
         </div>
         <hr>
     </div>

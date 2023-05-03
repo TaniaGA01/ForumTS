@@ -1,21 +1,18 @@
 <script setup lang="ts">
-import type { UserI, ThreadI, PostI } from '@/data/data.interfaces'
+import type { UserI, UserAthI } from '@/data/data.interfaces'
 import { UseUserAuthStore } from '@/stores/UserAuth.store'
 import { ref } from 'vue';
-const usersStore = UseUserAuthStore()
+const usersStore = ref(UseUserAuthStore())
 const props = defineProps<{
-    Threads: ThreadI[],
-    user: UserI,
-    Posts: PostI[]
+    user: UserAthI,
 }>()
 const activeUser = ref({ ...props.user } as UserI) // this is for not modifie in reactive way v-model inputs and store data
 
 const save = (activeUserUpdatedData:UserI): void  => { 
-
     const userUpdate = {
         ...activeUserUpdatedData
     }
-    usersStore.editUser(userUpdate)
+    usersStore.value.editUser(userUpdate)
 }
 </script>
 <template>
@@ -59,8 +56,8 @@ const save = (activeUserUpdatedData:UserI): void  => {
                 <p class="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
             </div>
             <div class="flex place-content-between mt-9 mb-5">
-                <span class="text-slate-800 ml-2">{{ props.Posts?.length }} posts</span>
-                <span class="text-slate-800 ml-2">{{ props.Threads?.length }} threads</span>
+                <span class="text-slate-800 ml-2">{{ user.Posts?.length }} posts</span>
+                <span class="text-slate-800 ml-2">{{ user.Threads?.length }} threads</span>
             </div>
             <hr>
             <div class="col-span-full mt-4">

@@ -2,11 +2,11 @@
 import { ArrowUturnRightIcon } from '@heroicons/vue/20/solid'
 import type { ForumElementI } from '@/data/data.interfaces'
 
-const props = defineProps({
-    forums: Object,
-    title: String,
-    categoryId:String
-});
+const props = defineProps<{
+    forums: ForumElementI[],
+    title: string,
+    categoryId: string
+}>()
 
 const forumThreadWord = (forum: ForumElementI) => {
     if (forum.threads?.length) {

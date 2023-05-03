@@ -11,7 +11,7 @@ const navigation = [
     { name: 'Thread', href: '#', current: false },
 ]
 const usersStore = UseUserAuthStore()
-const user = usersStore.authUser?.UserInfo
+const user = usersStore.authUser
 </script>
 <template>
     <Disclosure as="nav" class="bg-fuchsia-800" v-slot="{ open }">

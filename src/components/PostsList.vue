@@ -1,8 +1,9 @@
 <script setup lang="ts">
-const props = defineProps({
-    threadPosts: Object,
-    users: Object
-});
+import type { UserI, PostI } from '@/data/data.interfaces'
+const props = defineProps<{
+    threadPosts: PostI[],
+    users: UserI[]
+}>()
 
 const userById = (userId: undefined | string) => {
     return props.users?.find((user: { id: string | undefined; }) => user.id === userId)

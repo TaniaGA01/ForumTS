@@ -1,17 +1,21 @@
 <script setup lang="ts">
-import type { UserI } from '@/data/data.interfaces'
+import type { UserI, ThreadI, PostI } from '@/data/data.interfaces'
 import { UseUserAuthStore } from '@/stores/UserAuth.store'
+import { ref } from 'vue';
 const usersStore = UseUserAuthStore()
-const props = defineProps({
-    userThread: Array,
-    userData: Object,
-    userPosts: Array
-});
-const activeUser = { ...props.userData } as UserI // this is for not modifie in reactive way v-model inputs and store data
+const props = defineProps<{
+    Threads: ThreadI[],
+    user: UserI,
+    Posts: PostI[]
+}>()
+const activeUser = ref({ ...props.user } as UserI) // this is for not modifie in reactive way v-model inputs and store data
 
+const save = (activeUserUpdatedData:UserI): void  => { 
 
-const save = (user:UserI): void  => { 
-    usersStore.editUser(user)
+    const userUpdate = {
+        ...activeUserUpdatedData
+    }
+    usersStore.editUser(userUpdate)
 }
 </script>
 <template>
@@ -35,7 +39,7 @@ const save = (user:UserI): void  => {
                 <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Username</label>
                 <div class="mt-2">
                 <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-fuchsia-600 sm:max-w-md">
-                    <input type="text" name="username" id="username" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" v-model="activeUser.name" />
+                    <input type="text" name="username" id="username" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" v-model="activeUser.username" />
                 </div>
                 </div>
             </div>
@@ -43,7 +47,7 @@ const save = (user:UserI): void  => {
                 <label for="fullname" class="block text-sm font-medium leading-6 text-gray-900">Fullname</label>
                 <div class="mt-2">
                 <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-fuchsia-600 sm:max-w-md">
-                    <input type="text" name="fullname" id="fullname" autocomplete="fullname" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" v-model="activeUser.username" />
+                    <input type="text" name="fullname" id="fullname" autocomplete="fullname" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" v-model="activeUser.name" />
                 </div>
                 </div>
             </div>
@@ -55,8 +59,8 @@ const save = (user:UserI): void  => {
                 <p class="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
             </div>
             <div class="flex place-content-between mt-9 mb-5">
-                <span class="text-slate-800 ml-2">{{ props.userPosts?.length }} posts</span>
-                <span class="text-slate-800 ml-2">{{ props.userThread?.length }} threads</span>
+                <span class="text-slate-800 ml-2">{{ props.Posts?.length }} posts</span>
+                <span class="text-slate-800 ml-2">{{ props.Threads?.length }} threads</span>
             </div>
             <hr>
             <div class="col-span-full mt-4">

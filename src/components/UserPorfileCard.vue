@@ -1,9 +1,10 @@
 <script setup lang="ts">
-const props = defineProps({
-    userThread: Array,
-    userData: Object,
-    userPosts: Array
-});
+import type { UserI, ThreadI, PostI } from '@/data/data.interfaces'
+const props = defineProps<{
+    userThread: ThreadI[]
+    userPosts: PostI[],
+    userData: UserI
+}>()
 </script>
 <template>
     <div class="bg-white grid place-content-center p-6 shadow">

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { CalendarIcon, ArrowUturnRightIcon, UserCircleIcon } from '@heroicons/vue/20/solid'
-const props = defineProps({
-    threads: Object,
-    posts: Object,
-    users: Object
-});
+import type { UserI, ThreadI, PostI } from '@/data/data.interfaces'
+
+const props = defineProps<{
+    threads: ThreadI[]
+    posts: PostI[],
+    users: UserI[]
+}>()
 const userById = (userId: undefined | string) => {
     return props.users?.find((user: { id: string | undefined; }) => user.id === userId)
 }

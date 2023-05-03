@@ -19,10 +19,10 @@ const save = (): void => {
     const newPost: PostI = reactive({
         edited: editedData,
         id: newPostId,
-        publishedAt: Math.floor(Date.now() / 1000),// date in seconds
+        publishedAt: 0,// date in seconds
         text: newPostText,
         threadId: route.params.id as string,
-        userId: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
+        userId: "",
         reactions: undefined
     })
     emit("newPostData", newPost)

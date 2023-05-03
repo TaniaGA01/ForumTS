@@ -22,8 +22,8 @@ const props = defineProps<{
     </div>
     <div class="text-center mt-5">
         <small>Member since june 2003 <br/>last visited 4 hours ago</small>
-        <button
+        <RouterLink :to="{ name: 'userProfileEdit' }"
             class="block w-full bg-violet-500 rounded-lg px-3.5 py-2.5 text-center text-md font-semibold text-white shadow-sm hover:bg-violet-600  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600 mt-5">Edit profile
-        </button>
+        </RouterLink>
     </div>
 </template>

@@ -2,6 +2,9 @@
 import type { UserI, UserAthI } from '@/data/data.interfaces'
 import { UseUserAuthStore } from '@/stores/UserAuth.store'
 import { ref } from 'vue';
+import router from "@/router";
+
+
 const usersStore = ref(UseUserAuthStore())
 const props = defineProps<{
     user: UserAthI,
@@ -13,6 +16,11 @@ const save = (activeUserUpdatedData:UserI): void  => {
         ...activeUserUpdatedData
     }
     usersStore.value.editUser(userUpdate)
+    router.push({ name : "userProfile" })
+}
+
+const cancel = () =>{
+    router.push({ name : "userProfile" })
 }
 </script>
 <template>
@@ -87,6 +95,7 @@ const save = (activeUserUpdatedData:UserI): void  => {
             <div class="col-span-full mt-4">
                 <div class="flex justify-between">
                     <button
+                        @click="cancel"
                         class="block bg-slate-500 rounded-lg px-3.5 py-2.5 text-center text-md font-semibold text-white shadow-sm hover:bg-slate-600  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-600 mt-5">Cancel
                     </button>
                     <button

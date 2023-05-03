@@ -5,14 +5,21 @@ import UserProfileCardEditor from '@/components/UserProfileCardEditor.vue'
 import type { UserAthI } from '@/data/data.interfaces'
 import { storeToRefs } from 'pinia'
 
+const props = defineProps<{
+    edit: { 
+        type:Boolean, 
+        default:false 
+    },
+}>()
+
 const { authUser } = storeToRefs(UseUserAuthStore());
 
 </script>
 <template>
     <div class="block sm:grid grid-flow-col gap-4 mt-12">
         <div class="row-span-1 ">
-            <UserProfileCard :user="authUser as UserAthI" />
-            <UserProfileCardEditor :user="authUser as UserAthI" />
+            <UserProfileCard v-if="!edit" :user="authUser as UserAthI" />
+            <UserProfileCardEditor v-else :user="authUser as UserAthI" />
         </div>
         <div class="col-span-5">
             <div class="block sm:flex place-content-between mb-5">

@@ -37,6 +37,11 @@ const router = createRouter({
       component: () => import('@/pages/Category.vue')
     },
     {
+      path: '/category/:id/thread',
+      name: 'threadEditor',
+      component: () => import('@/pages/ThreadCreatePage.vue')
+    },
+    {
       path: '/user',
       name: 'userProfile',
       component: () => import('@/pages/Profile.vue'),

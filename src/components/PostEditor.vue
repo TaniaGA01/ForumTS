@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { PostI, EditedI } from '@/data/data.interfaces'
 import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router'
 
@@ -10,20 +9,9 @@ const emit = defineEmits(["newPostData", "data"])
 let newPostText = ref('')
 
 const save = (): void => {
-    const newPostId = "abc" + Math.random()
-    const editedData: EditedI = {
-        at: 0,
-        by: "ALXhxjwgY9PinwNGHpfai6OWyDu2",
-        moderated: false,
-    }
-    const newPost: PostI = reactive({
-        edited: editedData,
-        id: newPostId,
-        publishedAt: 0,// date in seconds
+    const newPost: object = reactive({
         text: newPostText,
         threadId: route.params.id as string,
-        userId: "",
-        reactions: undefined
     })
     emit("newPostData", newPost)
     newPostText.value = ""

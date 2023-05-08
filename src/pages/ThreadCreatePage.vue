@@ -1,14 +1,31 @@
 <script setup lang="ts">
-import type { ForumElementI, CategoryI } from '@/data/data.interfaces'
-import sourceData from '@/data/data.json'
+import type { ThreadI } from '@/data/data.interfaces'
+import ThreadEditor from '@/components/ThreadEditor.vue';
 import { useRoute } from 'vue-router';
-import { computed, reactive } from 'vue';
+import { computed, ref } from 'vue';
+import { UseThreadsStore } from '@/stores/Threads.store'
+import { UseForumStore } from '@/stores/Forums.store'
+
 const route = useRoute()
 
-const forumsData = reactive<ForumElementI[]>(sourceData.forums)
-const forum = computed(() => forumsData.find(forum => forum.id === route.params.id));
+const threadsStore = UseThreadsStore()
+const forumStore = UseForumStore().forums
 
-import ThreadEditor from '@/components/ThreadEditor.vue';
+const forum = computed(() => forumStore.find(forum => forum.id === route.params.id));
+
+let contentData = ref<string>('')
+
+const text = (content: string): void =>{
+    contentData = ref<string>(content)
+}
+
+const addThread = (data: ThreadI): void => {
+    const newThread = {
+        ...data
+    }
+    threadsStore.createThread(newThread, contentData.value)
+}
+
 </script>
 <template>
     <div>
@@ -18,6 +35,6 @@ import ThreadEditor from '@/components/ThreadEditor.vue';
             </h1>
             <hr class="mt-2 mb-12">
         </div>
-        <ThreadEditor/>
+        <ThreadEditor @content="text" @newThreadData = "addThread" />
     </div>
 </template>

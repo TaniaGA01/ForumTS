@@ -37,7 +37,7 @@ const router = createRouter({
       component: () => import('@/pages/Category.vue')
     },
     {
-      path: '/category/:id/thread',
+      path: '/forum/:id/newThread',
       name: 'threadEditor',
       component: () => import('@/pages/ThreadCreatePage.vue')
     },

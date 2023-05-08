@@ -94,6 +94,14 @@ export interface ThreadI {
     id:            string;
 }
 
+export interface NewThreadI{
+    id : string,
+    title : string,
+    content : string,
+    forumId : string,
+    userId : string,
+}
+
 export interface UserI {
     avatar:        string;
     email:         string;

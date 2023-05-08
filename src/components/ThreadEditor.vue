@@ -15,9 +15,9 @@ const inputsValues = {
     content: ref('')
 }
 
-const save = ():void => {
+const newId = 'ggg' + Math.random()
 
-    const newId = 'ggg' + Math.random()
+const save = ():void => {
 
     const newThreat: object = reactive({
         id: newId,
@@ -61,7 +61,7 @@ const cancel = () => {
           </div>
         </div>
         <div class="mt-6 flex items-center justify-end gap-x-6">
-            <button @click="cancel" type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+            <button @click.prevent="cancel" type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
             <button type="submit" class="rounded-md bg-violet-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Publish</button>
         </div>
       </div>

@@ -17,8 +17,6 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
     actions:{
         // constructor
         createThread(threadData:ThreadI, content:string){
-            // threadData.id = this.threadId
-            
             threadData.contributors = [],
             threadData.firstPostId = '',
             threadData.userId = UseUserAuthStore().authId

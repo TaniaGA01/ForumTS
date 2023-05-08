@@ -26,6 +26,9 @@ const addThread = (data: ThreadI): void => {
     threadsStore.createThread(newThread, contentData.value)
 }
 
+console.log("forum", forum.value?.threads)
+console.log("thread", threadsStore.threads)
+
 </script>
 <template>
     <div>

@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import router from "@/router";
 import { UseThreadsStore } from '@/stores/Threads.store';
 import { UsePostsStore } from '@/stores/Posts.store'
+import { UseForumStore } from '@/stores/Forums.store'
 
 const emit = defineEmits([
     'content', 'text',
@@ -18,11 +19,15 @@ const thread = computed(() => threadsStore.threads.find(thread => thread.id === 
 const postStore = UsePostsStore()
 const post = computed(() => postStore.posts.find(post => post.threadId === thread.value?.id))
 
+const forumStore = UseForumStore().forums
+const forumCreate = computed(() => forumStore.find(forum => forum.id === route.params.id));
+
 const inputsValues = {
     title: ref(thread.value?.title),
     content: ref(post.value?.text),
     newId: ref(''),
-    saveBtn: ref('')
+    saveBtn: ref(''),
+    h1: ref('')
 }
 
 const modeValue = () => {
@@ -61,6 +66,15 @@ const cancel = () => {
 
 </script>
 <template>
+    <div>
+        <h1 v-if="thread?.id" class="text-3xl mt-12 font-bold text-slate-600">
+            Editing <span class="text-5xl">{{ thread.title }}</span>
+        </h1>
+        <h1 v-else class="text-3xl mt-12 font-bold text-slate-600">
+            Create new thread in <span class="text-5xl">{{ forumCreate?.name }}</span>
+        </h1>
+        <hr class="mt-2 mb-12">
+    </div>
     <Form @submit.prevent="save" :modeValue="modeValue()">
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">

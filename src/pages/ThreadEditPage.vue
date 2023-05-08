@@ -19,11 +19,11 @@ const text = (content: string): void =>{
     contentData = ref<string>(content)
 }
 
-const addThread = (data: ThreadI): void => {
+const editThread = (data: ThreadI): void => {
     const newThread = {
         ...data
     }
-    threadsStore.createThread(newThread, contentData.value)
+    threadsStore.editThread(newThread, contentData.value)
 }
 
 </script>
@@ -35,6 +35,6 @@ const addThread = (data: ThreadI): void => {
             </h1>
             <hr class="mt-2 mb-12">
         </div>
-        <ThreadEditor @content="text" @newThreadData = "addThread" />
+        <ThreadEditor @content="text" @newThreadData = "editThread" />
     </div>
 </template>

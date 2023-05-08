@@ -38,8 +38,13 @@ const router = createRouter({
     },
     {
       path: '/forum/:id/newThread',
-      name: 'threadEditor',
+      name: 'threadCreator',
       component: () => import('@/pages/ThreadCreatePage.vue')
+    },
+    {
+      path: '/thread/:id/edit',
+      name: 'threadEditor',
+      component: () => import('@/pages/ThreadEditPage.vue')
     },
     {
       path: '/user',

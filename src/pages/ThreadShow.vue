@@ -25,9 +25,16 @@ const addPost = (data: PostI): void => {
 </script>
 
 <template>
-    <div>
-        <h1 class="text-3xl mt-12 font-bold text-slate-600">{{ thread?.title }}</h1>
-        <hr class="mt-2 mb-12">
+    <div class="sm:flex justify-between mt-16">
+        <div>
+            <h1 class="text-4xl font-bold text-slate-700 uppercase">{{ thread?.title }}</h1>
+        </div>
+        <div class="hidden sm:block">
+            <RouterLink :to="{ name: 'threadEditor', params: { id: thread?.id } }"
+            class="bg-violet-500 hover:bg-violet-600 text-white py-2 px-3 rounded-lg">
+                Edit thread
+            </RouterLink>   
+        </div>
     </div>
     <PostsList :threadPosts="threadPosts" :users="usersStore.users" />
     <PostEditor @newPostData="addPost" />

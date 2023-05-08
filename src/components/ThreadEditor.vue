@@ -2,9 +2,6 @@
 import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router'
 import router from "@/router";
-import { UseThreadsStore } from '@/stores/Threads.store'
-
-const threadsId = UseThreadsStore().threadId
 
 const route = useRoute()
 
@@ -20,9 +17,12 @@ const inputsValues = {
 
 const save = ():void => {
 
+    const newId = 'ggg' + Math.random()
+
     const newThreat: object = reactive({
-        forumId:       route.params.id as string,
-        title:         inputsValues.title.value
+        id: newId,
+        forumId: route.params.id as string,
+        title:  inputsValues.title.value
     })
 
     emit("content", inputsValues.content.value)
@@ -31,10 +31,10 @@ const save = ():void => {
     inputsValues.title.value = ''
     inputsValues.content.value = ''
 
-    router.push({ name : "Forum", params:{ id: route.params.id } })
+    router.push({ name : "threadShow", params:{ id: newId } })
 }
 
-const cancel = () =>{
+const cancel = () => {
     router.push({ name : "Forum", params:{ id: route.params.id } })
 }
 

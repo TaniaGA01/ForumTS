@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import sourceData from '@/data/data.json';
-import type { ThreadI, PostI, EditedI } from '@/data/data.interfaces'
+import type { ThreadI } from '@/data/data.interfaces'
 import { UseUserAuthStore } from "./UserAuth.store";
 import { UsePostsStore } from "./Posts.store";
 import { UseForumStore } from "./Forums.store";
@@ -13,19 +13,12 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
             threadId:''
         }
     },
-    getters:{
-        // threadId(state){
-        //     const id = (state.threadId = 'ggg' + Math.random())
-        //     return {
-        //         ...id
-        //     }
-        // }
-    },
+    getters:{},
     actions:{
         // constructor
         createThread(threadData:ThreadI, content:string){
             // threadData.id = this.threadId
-            threadData.id = 'ggg' + Math.random()
+            
             threadData.contributors = [],
             threadData.firstPostId = '',
             threadData.userId = UseUserAuthStore().authId

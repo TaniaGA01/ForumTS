@@ -64,10 +64,10 @@ const breadcrumbs = [
     <hr class="m-2">
     <h2 class="text-xl text-slate-500 sm:mb-16">{{ forum?.description }}</h2>
     <div class="block sm:hidden my-12">
-            <a href="http://" 
-            class="bg-violet-500 hover:bg-violet-600 text-white py-2 px-3 rounded-lg ">
+        <RouterLink :to="{ name: 'threadCreator', params: { id: forum?.id } }"
+            class="bg-violet-500 hover:bg-violet-600 text-white py-2 px-3 rounded-lg">
                 Start a thread
-            </a>
-        </div>
+        </RouterLink>  
+    </div>
     <ThreadList :threads="threads" :users="users" />
 </template>

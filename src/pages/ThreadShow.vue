@@ -29,7 +29,7 @@ const addPost = (data: PostI): void => {
         <div>
             <h1 class="text-4xl font-bold text-slate-700 uppercase">{{ thread?.title }}</h1>
         </div>
-        <div class="hidden sm:block">
+        <div class="my-12 sm:block sm:my-0">
             <RouterLink :to="{ name: 'threadEditor', params: { id: thread?.id } }"
             class="bg-violet-500 hover:bg-violet-600 text-white py-2 px-3 rounded-lg">
                 Edit thread

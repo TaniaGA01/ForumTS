@@ -67,11 +67,11 @@ const cancel = () => {
 </script>
 <template>
     <div>
-        <h1 v-if="thread?.id" class="text-3xl mt-12 font-bold text-slate-600">
-            Editing <span class="text-5xl">{{ thread.title }}</span>
+        <h1 v-if="thread?.id" class="text-2xl sm:text-3xl mt-12 font-bold text-slate-600">
+            Editing <span class="text-3xl sm:text-5xl">{{ thread.title }}</span>
         </h1>
-        <h1 v-else class="text-3xl mt-12 font-bold text-slate-600">
-            Create new thread in <span class="text-5xl">{{ forumCreate?.name }}</span>
+        <h1 v-else class="text-2xl sm:text-3xl mt-12 font-bold text-slate-600">
+            Create new thread in <span class="text-3xl sm:text-5xl">{{ forumCreate?.name }}</span>
         </h1>
         <hr class="mt-2 mb-12">
     </div>

@@ -3,6 +3,7 @@ import type { PostI, ThreadI, UserI, UserAthI } from '@/data/data.interfaces'
 import { UseThreadsStore } from "./Threads.store";
 import { UsePostsStore } from "./Posts.store";
 import { UseUserStore } from "@/stores/Users.store"
+import { findBySameId, replaceItem } from "@/helpers";
 
 export const UseUserAuthStore = defineStore('UserAuthStore', {
     state:() => {
@@ -15,7 +16,7 @@ export const UseUserAuthStore = defineStore('UserAuthStore', {
     },
     getters:{
         authUser: (state) => {
-            const user =  state.users.find(user => user.id === state.authId) as UserI | UserAthI
+            const user =  findBySameId(state.users, state.authId) as UserI | UserAthI
             if(!user) return null
 
             const threadsStore = UseThreadsStore()
@@ -35,9 +36,7 @@ export const UseUserAuthStore = defineStore('UserAuthStore', {
     },
     actions:{
         editUser(activeUser:UserI){
-            const findUser = this.users.map(oldUser => oldUser.id === activeUser.id)
-            const findUserIndex = findUser.findIndex(i => i === true) 
-            UseUserStore().users.splice(findUserIndex, 1, activeUser)
+            replaceItem(this.users, activeUser.id, activeUser)
         }
     }
 })

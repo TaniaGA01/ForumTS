@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type { UserI, PostI } from '@/data/data.interfaces'
+import { findBySameId } from "@/helpers";
+
 const props = defineProps<{
     threadPosts: PostI[],
     users: UserI[]
 }>()
 
 const userById = (userId: undefined | string) => {
-    return props.users?.find((user: { id: string | undefined; }) => user.id === userId)
+    return findBySameId(props.users, userId)
 }
 </script>
 <template>

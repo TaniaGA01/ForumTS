@@ -5,6 +5,7 @@ import type { ThreadI } from '@/data/data.interfaces'
 import { UseUserAuthStore } from "./UserAuth.store";
 import { UsePostsStore } from "./Posts.store";
 import { UseForumStore } from "./Forums.store";
+import { findBySameId } from "@/helpers";
 
 export const UseThreadsStore = defineStore('ThreadsStore', {
     state:() => {
@@ -39,7 +40,7 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
 
             // add thread id to the forum
             const forums = UseForumStore().forums;
-            const getForum = forums.find(forum => forum.id === newThreadData.forumId)
+            const getForum = findBySameId(forums, newThreadData.forumId)
             getForum?.threads?.push(newThreadData.id)
 
             // create the post
@@ -55,7 +56,7 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
         },
         editThread(editThreadData:ThreadI, content:string){
             
-            const findThreadToEdit = this.threads.find(oldThread => oldThread.id === editThreadData.id) as ThreadI
+            const findThreadToEdit = findBySameId(this.threads, editThreadData.id) as ThreadI
             findThreadToEdit.title = editThreadData.title
 
             // add thread to the user

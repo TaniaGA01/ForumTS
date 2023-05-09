@@ -5,6 +5,7 @@ import router from "@/router";
 import { UseThreadsStore } from '@/stores/Threads.store';
 import { UsePostsStore } from '@/stores/Posts.store'
 import { UseForumStore } from '@/stores/Forums.store'
+import { findBySameId } from "@/helpers";
 
 const emit = defineEmits([
     'content', 'text',
@@ -14,13 +15,13 @@ const emit = defineEmits([
 const route = useRoute()
 
 const threadsStore = UseThreadsStore()
-const thread = computed(() => threadsStore.threads.find(thread => thread.id === route.params.id))
+const thread = computed(() => findBySameId(threadsStore.threads, route.params.id))
 
 const postStore = UsePostsStore()
 const post = computed(() => postStore.posts.find(post => post.threadId === thread.value?.id))
 
 const forumStore = UseForumStore().forums
-const forumCreate = computed(() => forumStore.find(forum => forum.id === route.params.id));
+const forumCreate = computed(() => findBySameId(forumStore, route.params.id));
 
 const inputsValues = {
     title: ref(thread.value?.title),

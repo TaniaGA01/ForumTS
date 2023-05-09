@@ -5,11 +5,12 @@ import { useRoute } from 'vue-router'
 import { UseThreadsStore } from '@/stores/Threads.store'
 import { UsePostsStore } from '@/stores/Posts.store'
 import { UseUserStore } from '@/stores/Users.store'
+import { findBySameId } from "@/helpers";
 
 const route = useRoute()
 
 const threadsStore = UseThreadsStore()
-const thread = computed(() => threadsStore.threads.find(thread => thread.id === route.params.id))
+const thread = computed(() => findBySameId(threadsStore.threads, route.params.id))
 
 const postsStore = UsePostsStore()
 const threadPosts = computed(() => postsStore.posts.filter(post => post.threadId === route.params.id))

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { CalendarIcon, ArrowUturnRightIcon, UserCircleIcon } from '@heroicons/vue/20/solid'
 import type { UserI, ThreadI, PostI } from '@/data/data.interfaces'
+import { findBySameId } from "@/helpers";
 
 const props = defineProps<{
     threads: ThreadI[]
@@ -8,7 +9,7 @@ const props = defineProps<{
     users: UserI[]
 }>()
 const userById = (userId: undefined | string) => {
-    return props.users?.find((user: { id: string | undefined; }) => user.id === userId)
+    return findBySameId(props.users, userId)
 }
 </script>
 <template>

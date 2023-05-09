@@ -4,6 +4,7 @@ import sourceData from '@/data/data.json';
 import type { EditedI, PostI, ThreadI } from '@/data/data.interfaces'
 import { UseThreadsStore } from '@/stores/Threads.store'
 import { UseUserAuthStore } from '@/stores/UserAuth.store'
+import { findBySameId, replaceItem } from "@/helpers";
 
 export const UsePostsStore = defineStore('PostsStore', {
     state:() => {
@@ -25,8 +26,9 @@ export const UsePostsStore = defineStore('PostsStore', {
             newPost.userId = UseUserAuthStore().authId
             newPost.publishedAt = Math.floor(Date.now() / 1000),// date in seconds
             newPost.reactions = undefined
+            
             this.posts.push(newPost)
-            const thread = UseThreadsStore().threads.find(thread => thread.id === newPost.threadId)
+            const thread = findBySameId(UseThreadsStore().threads, newPost.threadId)
             thread?.posts.push(newPost.id)
         },
         editPost(postEdit:PostI){
@@ -43,9 +45,7 @@ export const UsePostsStore = defineStore('PostsStore', {
             postEdit.publishedAt = Math.floor(Date.now() / 1000),// date in seconds
             postEdit.reactions = undefined
 
-            const findPost = this.posts.map(oldPost => oldPost.id === postEdit.id)
-            const findPostIndex = findPost.findIndex(i => i === true)
-            this.posts.splice(findPostIndex, 1, postEdit)
+            replaceItem(this.posts, postEdit.id, postEdit)
         }
     }
 })

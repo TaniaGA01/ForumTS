@@ -4,6 +4,7 @@ import type { ForumElementI, ThreadI, UserI } from '@/data/data.interfaces'
 import sourceData from '@/data/data.json'
 import { reactive,computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { findBySameId } from "@/helpers";
 
 const forumsData = reactive<ForumElementI[]>(sourceData.forums)
 const threadsData = reactive<ThreadI[]>(sourceData.threads)
@@ -11,7 +12,7 @@ const users = reactive<UserI[]>(sourceData.users)
 
 
 const route = useRoute()
-const forum = computed(() => forumsData.find(forum => forum.id === route.params.id));
+const forum = computed(() => findBySameId(forumsData, route.params.id));
 const threads = computed(() => threadsData.filter(thread => thread.forumId === route.params.id))
 
 const breadcrumbs = [

@@ -3,12 +3,13 @@ import type { ForumElementI, CategoryI } from '@/data/data.interfaces'
 import sourceData from '@/data/data.json'
 import { useRoute } from 'vue-router';
 import { reactive } from 'vue';
+import { findBySameId } from "@/helpers";
 const route = useRoute()
 
 const forumsData = reactive<ForumElementI[]>(sourceData.forums)
 const categories = reactive<CategoryI[]>(sourceData.categories)
 
-const category1 = categories.find(category => category.id === route.params.id)
+const category1 = findBySameId(categories, route.params.id)
 
 const getForumsForCategorie = (category:CategoryI) => {
     return forumsData.filter(forum => forum.categoryId === category.id)

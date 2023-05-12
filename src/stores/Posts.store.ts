@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { reactive } from "vue";
+import { computed, reactive } from "vue";
 import sourceData from '@/data/data.json';
 import type { EditedI, PostI, ThreadI } from '@/data/data.interfaces'
 import { UseThreadsStore } from '@/stores/Threads.store'
@@ -13,7 +13,18 @@ export const UsePostsStore = defineStore('PostsStore', {
             threads:reactive<ThreadI[]>(sourceData.threads),
         }
     },
-    getters:{},
+    getters:{
+        postsData:(state) => {
+
+            const post = (route:string) => computed(() => state.posts.find(post => post.threadId === route))
+
+            return{
+                get Post(){
+                    return post
+                }
+            }
+        }
+    },
     actions:{
         createPost(newPost:PostI){
             const editedData: EditedI = {

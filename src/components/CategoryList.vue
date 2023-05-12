@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import type { ForumElementI, CategoryI } from '@/data/data.interfaces'
-import sourceData from '@/data/data.json'
-import { reactive } from 'vue';
-const forumsData = reactive<ForumElementI[]>(sourceData.forums)
+import type { CategoryI } from '@/data/data.interfaces'
+import { UseCategoriesStore } from '@/stores/Categories.store';
+import { storeToRefs } from 'pinia';
 
 const props = defineProps<{
     categories: CategoryI[],
 }>()
 
-const getForumsForCategorie = (category:CategoryI) => {
-    return forumsData.filter(forum => forum.categoryId === category.id)
-}
+const {categoriesData} = storeToRefs(UseCategoriesStore())
+const categoryByForum = categoriesData.value.ForumByCategory
+
 </script>
 <template>
     <ForumList 
     v-for="category in props.categories" :key="category?.id"
-    :forums="getForumsForCategorie(category)"
+    :forums="categoryByForum(category)"
     :title="category?.name"
     :category-id="category?.id"
     />

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useRoute } from 'vue-router'
 import router from "@/router";
 import { UseThreadsStore } from '@/stores/Threads.store';
 import { UsePostsStore } from '@/stores/Posts.store'
 import { UseForumStore } from '@/stores/Forums.store'
-import { findBySameId } from "@/helpers";
+import { storeToRefs } from 'pinia';
 
 const emit = defineEmits([
     'content', 'text',
@@ -14,14 +14,15 @@ const emit = defineEmits([
 
 const route = useRoute()
 
-const threadsStore = UseThreadsStore()
-const thread = computed(() => findBySameId(threadsStore.threads, route.params.id))
+const { threadsData } = storeToRefs(UseThreadsStore())
+const thread = threadsData.value.Thread(route.params.id as string)
 
-const postStore = UsePostsStore()
-const post = computed(() => postStore.posts.find(post => post.threadId === thread.value?.id))
+const { postsData } =  storeToRefs(UsePostsStore())
+const post = postsData.value.Post(route.params.id as string)
 
-const forumStore = UseForumStore().forums
-const forumCreate = computed(() => findBySameId(forumStore, route.params.id));
+const {forumsData} =  storeToRefs(UseForumStore())
+const forum = forumsData.value.Forum(route.params.id as string)
+
 
 const inputsValues = {
     title: ref(thread.value?.title),
@@ -33,7 +34,7 @@ const inputsValues = {
 
 const modeValue = () => {
    if(thread.value?.id){
-    inputsValues.newId.value = thread.value?.id
+    inputsValues.newId.value = thread.value.id
     inputsValues.saveBtn.value = 'Edit'
    }else{
     inputsValues.newId.value = 'ggg' + Math.random()
@@ -69,14 +70,14 @@ const cancel = () => {
 <template>
     <div>
         <h1 v-if="thread?.id" class="text-2xl sm:text-3xl mt-12 font-bold text-slate-600">
-            Editing <span class="text-3xl sm:text-5xl">{{ thread.title }}</span>
+            Editing <span class="text-3xl sm:text-5xl">{{ thread?.title }}</span>
         </h1>
         <h1 v-else class="text-2xl sm:text-3xl mt-12 font-bold text-slate-600">
-            Create new thread in <span class="text-3xl sm:text-5xl">{{ forumCreate?.name }}</span>
+            Create new thread in <span class="text-3xl sm:text-5xl">{{ forum?.name }}</span>
         </h1>
         <hr class="mt-2 mb-12">
     </div>
-    <Form @submit.prevent="save" :modeValue="modeValue()">
+    <form @submit.prevent="save" :modeValue="modeValue()">
       <div class="space-y-12">
         <div class="border-b border-gray-900/10 pb-12">
           <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -101,7 +102,7 @@ const cancel = () => {
             <button type="submit" class="rounded-md bg-violet-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">{{ inputsValues.saveBtn.value }}</button>
         </div>
       </div>
-    </Form>
+    </form>
   </template>
   
  

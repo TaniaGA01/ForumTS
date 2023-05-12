@@ -1,27 +1,24 @@
 <script setup lang="ts">
-import type { ForumElementI, CategoryI } from '@/data/data.interfaces'
-import sourceData from '@/data/data.json'
+import type { CategoryI } from '@/data/data.interfaces'
 import { useRoute } from 'vue-router';
-import { reactive } from 'vue';
-import { findBySameId } from "@/helpers";
+import { UseCategoriesStore } from '@/stores/Categories.store'
+import { storeToRefs } from 'pinia';
+
 const route = useRoute()
 
-const forumsData = reactive<ForumElementI[]>(sourceData.forums)
-const categories = reactive<CategoryI[]>(sourceData.categories)
+const {categoriesData} = storeToRefs(UseCategoriesStore())
 
-const category1 = findBySameId(categories, route.params.id)
+const category = categoriesData.value.Category(route.params.id as string)
+const categoryByForum = categoriesData.value.ForumByCategory
 
-const getForumsForCategorie = (category:CategoryI) => {
-    return forumsData.filter(forum => forum.categoryId === category.id)
-}
 </script>
 <template>
     <div>
-        <h1 class="text-3xl mt-12 font-bold text-slate-600">{{ category1?.name }}</h1>
+        <h1 class="text-3xl mt-12 font-bold text-slate-600">{{ category?.name }}</h1>
         <hr class="mt-2 mb-12">
     </div>
     <ForumList 
-    :forums="getForumsForCategorie(category1 as CategoryI)"
-    :title="category1?.name"
+    :forums="categoryByForum(category as CategoryI)"
+    :title="category?.name"
     />
 </template>

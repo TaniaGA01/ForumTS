@@ -4,7 +4,6 @@ import { UseUserAuthStore } from '@/stores/UserAuth.store'
 import { ref } from 'vue';
 import router from "@/router";
 
-
 const usersStore = ref(UseUserAuthStore())
 const props = defineProps<{
     user: UserAthI,
@@ -25,7 +24,7 @@ const cancel = () =>{
 </script>
 <template>
     <div class="bg-white p-6 shadow">
-        <Form @submit.prevent="save(activeUser)" class="grid place-content-center">
+        <form @submit.prevent="save(activeUser)" class="grid place-content-center">
             <div class="col-span-full">
                 <label for="photo" class="block text-sm font-medium leading-6 text-gray-900">Avatar</label>
                 <div class="mt-2 text-center">
@@ -103,8 +102,7 @@ const cancel = () =>{
                     </button>
                 </div>
             </div>
-        </Form>
-        
+        </form>   
     </div>
     <div class="text-center mt-5">
         <small>Member since june 2003 <br/>last visited 4 hours ago</small>

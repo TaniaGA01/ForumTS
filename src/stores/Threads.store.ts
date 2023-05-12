@@ -1,20 +1,38 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import sourceData from '@/data/data.json';
 import type { ThreadI } from '@/data/data.interfaces'
 import { UseUserAuthStore } from "./UserAuth.store";
-import { UsePostsStore } from "./Posts.store";
 import { UseForumStore } from "./Forums.store";
+import { computed } from 'vue';
+import { UsePostsStore } from '@/stores/Posts.store'
 import { findBySameId } from "@/helpers";
 
 export const UseThreadsStore = defineStore('ThreadsStore', {
     state:() => {
         return{
-            threads:ref<ThreadI[]>(sourceData.threads),
+            ...sourceData.threads,
+            threads:reactive(sourceData.threads) as ThreadI[],
             threadId:''
         }
     },
-    getters:{},
+    getters:{
+        threadsData:(state) => {
+            const thread = (route:string) => computed(() => findBySameId(state.threads, route))
+
+            const postsStore = UsePostsStore()
+            const threadPosts = (route:string) => computed(() => postsStore.posts.filter(post => post.threadId === route))
+
+            return{
+                get Thread(){
+                    return thread
+                },
+                get ThreadPost(){
+                    return threadPosts
+                }
+            }
+        }
+    },
     actions:{
         // constructor
         createThread(newThreadData:ThreadI, content:string){
@@ -35,8 +53,6 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
             const userAuthStore = UseUserAuthStore();
             const user = userAuthStore.authUser
             user?.Threads.push(newThreadData);
-
-            // console.log('user', user)
 
             // add thread id to the forum
             const forums = UseForumStore().forums;

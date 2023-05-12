@@ -17,7 +17,7 @@ const userById = (userId: undefined | string) => {
         <h2 class="text-xl bg-fuchsia-800 py-5 px-7 text-white uppercase rounded-t-lg font-semibold">Threads</h2>
         <div class="overflow-hidden bg-white shadow sm:rounded-md">
             <ul role="list" class="divide-y-2 divide-gray-200">
-                <li v-for="thread in threads" :key="thread.id">
+                <li v-for="thread in props.threads" :key="thread.id">
                     <div class="px-4 py-4 sm:px-6">
                         <div class="flex items-center justify-between">
                             <RouterLink :to="{ name: 'threadShow', params: { id: thread.id } }"

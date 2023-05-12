@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import sourceData from '@/data/data.json'
+import { UseThreadsStore } from '@/stores/Threads.store'
+
 
 const router = createRouter({
   history: createWebHistory(),
@@ -14,7 +15,8 @@ const router = createRouter({
       name: 'threadShow',
       component: () => import('@/pages/ThreadShow.vue'),
       beforeEnter(to) { // Page not found without changing url
-        const threadExists = sourceData.threads.find(thread => thread.id === to.params.id)
+        const threadsStores = UseThreadsStore()
+        const threadExists = threadsStores.threads.find(thread => thread.id === to.params.id)
         if (!threadExists) {
           return {
             name: 'NotFound',

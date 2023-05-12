@@ -4,16 +4,19 @@ import type { ForumElementI, ThreadI, UserI } from '@/data/data.interfaces'
 import sourceData from '@/data/data.json'
 import { reactive,computed } from 'vue';
 import { useRoute } from 'vue-router';
-import { findBySameId } from "@/helpers";
-
-const forumsData = reactive<ForumElementI[]>(sourceData.forums)
-const threadsData = reactive<ThreadI[]>(sourceData.threads)
-const users = reactive<UserI[]>(sourceData.users)
-
+import { UseForumStore } from '@/stores/Forums.store';
+import { storeToRefs } from 'pinia'
+import { UseUserStore } from '@/stores/Users.store'
 
 const route = useRoute()
-const forum = computed(() => findBySameId(forumsData, route.params.id));
-const threads = computed(() => threadsData.filter(thread => thread.forumId === route.params.id))
+
+const { forumsData } = storeToRefs(UseForumStore())
+
+const getUsers = UseUserStore()
+
+const forum = forumsData.value.Forum(route.params.id as string)
+
+const threads = forumsData.value.Threads(route.params.id as string)
 
 const breadcrumbs = [
     {
@@ -28,7 +31,7 @@ const breadcrumbs = [
     },
     {
         id:3,
-        name:forum.value?.name,
+        name:forum.value.name,
         href:'#'
     },
 ]
@@ -70,5 +73,5 @@ const breadcrumbs = [
                 Start a thread
         </RouterLink>  
     </div>
-    <ThreadList :threads="threads" :users="users" />
+    <ThreadList :threads="threads" :users="getUsers.users" />
 </template>

@@ -23,6 +23,7 @@ const usersStore = UseUserStore()
 const author = findBySameId(usersStore.users, thread.value.userId)
 
 const postsStore = UsePostsStore()
+
 const addPost = (data: PostI): void => {
     const newPost = {
         ...data
@@ -52,6 +53,6 @@ const addPost = (data: PostI): void => {
                 {{ postsCounter - 1 }} replies by {{ contributorCounter }} contributors
             </span>
         </div>
-    <PostsList :threadPosts="threadPosts" :users="usersStore.users" />
+    <PostsList :threadPosts="threadPosts" :users="usersStore.users" :posts="postsStore.posts" />
     <PostEditor @newPostData="addPost" />
 </template>

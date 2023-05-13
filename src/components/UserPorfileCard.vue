@@ -13,13 +13,13 @@ console.log(props.user)
                 :alt="`${user.name} profil picture`" />
         </div>
         <h3 class="text-slate-600 ml-2 text-center text-2xl font-semibold mb-10">{{ user.name }}</h3>
-        <span class="text-slate-800 ml-2">{{ user.username }}</span>
-        <span class="text-slate-800 ml-2">{{ user.bio }}</span>
-        <div class="flex place-content-between mt-9 mb-5">
+        <span class=" ml-2 uppercase font-semibold text-slate-600">{{ user.username }}</span>
+        <span class="text-slate-800 ml-2 mt-5">{{ user.bio }}</span>
+        <hr class="mt-5">
+        <div class="flex place-content-between my-5">
             <span class="text-slate-800 ml-2">{{ props.user.UserPosts.length }} posts</span>
             <span class="text-slate-800 ml-2">{{ props.user.UserThreads.length }} threads</span>
         </div>
-        <hr>
     </div>
     <div class="text-center mt-5">
         <small>Member since june 2003 <br/>last visited 4 hours ago</small>

@@ -18,9 +18,20 @@ export const UsePostsStore = defineStore('PostsStore', {
 
             const post = (route:string) => computed(() => state.posts.find(post => post.threadId === route))
 
+            const postsByUser = (userId: string) => computed(() => state.posts.filter(post => post.userId === userId)) 
+
+            const threadsData = UseThreadsStore()
+            const threads = (userId:string) => computed(() => threadsData.threads.filter(thread => thread.userId === userId))
+
             return{
                 get Post(){
                     return post
+                },
+                get PostsByUser(){
+                    return postsByUser
+                },
+                get ThreadsByUser(){
+                    return threads
                 }
             }
         }

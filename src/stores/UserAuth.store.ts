@@ -11,8 +11,8 @@ export const UseUserAuthStore = defineStore('UserAuthStore', {
         return{
             users: allUsers.users,
             // authId: 'jVa6Go6Nl1Urkag1R2p9CHTf4ny1'
-            // authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'
-            authId: 'ALXhxjwgY9PinwNGHpfai6OWyDu2'
+            authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'
+            // authId: 'ALXhxjwgY9PinwNGHpfai6OWyDu2'
         }
     },
     getters:{

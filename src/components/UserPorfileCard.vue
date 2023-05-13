@@ -3,7 +3,7 @@ import type { UserAthI } from '@/data/data.interfaces'
 const props = defineProps<{
     user: UserAthI,
 }>()
-
+console.log(props.user)
 </script>
 <template>
     <div class="bg-white grid place-content-center p-6 shadow">
@@ -16,8 +16,8 @@ const props = defineProps<{
         <span class="text-slate-800 ml-2">{{ user.username }}</span>
         <span class="text-slate-800 ml-2">{{ user.bio }}</span>
         <div class="flex place-content-between mt-9 mb-5">
-            <span class="text-slate-800 ml-2">{{ user.Posts.length }} posts</span>
-            <span class="text-slate-800 ml-2">{{ user.Threads.length }} threads</span>
+            <span class="text-slate-800 ml-2">{{ props.user.UserPosts.length }} posts</span>
+            <span class="text-slate-800 ml-2">{{ props.user.UserThreads.length }} threads</span>
         </div>
         <hr>
     </div>

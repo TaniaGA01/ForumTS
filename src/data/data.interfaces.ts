@@ -117,8 +117,8 @@ export interface UserI {
     website?:      string;
 }
 export interface UserAthI {
-    Posts:         PostI[],
-    Threads:       ThreadI[],
+    UserPosts:     PostI[],
+    UserThreads:   ThreadI[],
     avatar:        string;
     email:         string;
     lastVisitAt:   number;

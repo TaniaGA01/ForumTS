@@ -28,8 +28,6 @@ export const UseCategoriesStore = defineStore('CategoriesStore', {
                     return getForumsByCategorie
                 }
             }
-
-
         }
     },
     actions:{}

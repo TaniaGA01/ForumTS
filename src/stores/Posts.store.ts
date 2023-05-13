@@ -40,7 +40,18 @@ export const UsePostsStore = defineStore('PostsStore', {
             
             this.posts.push(newPost)
             const thread = findBySameId(UseThreadsStore().threads, newPost.threadId)
+
+            const userAuthStore = UseUserAuthStore();
+
+            const findThreadContributors = thread.contributors.map((contributorId: string) => contributorId === userAuthStore.authUser?.id)
+            const findExistingContributor = findThreadContributors.findIndex((i: boolean) => i === true)
+
+            if(findExistingContributor === -1 ){ //not existing
+                thread?.contributors.push(UseUserAuthStore().authId)
+            }
+
             thread?.posts.push(newPost.id)
+
         },
         editPost(postEdit:PostI){
 

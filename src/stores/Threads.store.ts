@@ -36,6 +36,7 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
     actions:{
         // constructor
         createThread(newThreadData:ThreadI, content:string){
+
             newThreadData.contributors = [],
             newThreadData.firstPostId = '',
             newThreadData.userId = UseUserAuthStore().authId
@@ -47,12 +48,12 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
             newThreadData.slug=          '',
 
             // add thread to threads
-            this.threads.push(newThreadData)   
+            this.threads.push(newThreadData)
 
             // add thread to the user
             const userAuthStore = UseUserAuthStore();
             const user = userAuthStore.authUser
-            user?.Threads.push(newThreadData);
+            user?.UserThreads.push(newThreadData);
 
             // add thread id to the forum
             const forums = UseForumStore().forums;
@@ -79,7 +80,9 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
             const userAuthStore = UseUserAuthStore();
             const user = userAuthStore.authUser
 
-            const findPost = user?.Posts.find(post => post.threadId === editThreadData.id)
+            const findPost = user?.UserPosts.find(post => post.threadId === editThreadData.id)
+
+            
 
             const { editPost } = UsePostsStore();
             

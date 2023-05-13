@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { CalendarIcon, ArrowUturnRightIcon, UserCircleIcon } from '@heroicons/vue/20/solid'
 import type { UserI, ThreadI, PostI } from '@/data/data.interfaces'
-import { findBySameId } from "@/helpers";
+import { findBySameId, itemCounter } from "@/helpers";
+import { computed } from 'vue';
 
 const props = defineProps<{
     threads: ThreadI[]
@@ -11,6 +12,8 @@ const props = defineProps<{
 const userById = (userId: undefined | string) => {
     return findBySameId(props.users, userId)
 }
+const postsCounter = itemCounter
+
 </script>
 <template>
     <div>
@@ -46,7 +49,7 @@ const userById = (userId: undefined | string) => {
                                 <p
                                     class="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800 sm:mr-5 my-5" >
                                     <ArrowUturnRightIcon class="mr-1.5 h-4 w-4 flex-shrink-0" aria-hidden="true" />
-                                    <timz>{{ thread.posts.length }} replies</timz>
+                                    <timz>{{ postsCounter(thread.posts) - 1 }} replies</timz>
                                 </p>
                                 <div class="flex">
                                     <img :src="userById(thread.userId)?.avatar" class="h-10 w-10 rounded-full mr-2" />

@@ -3,6 +3,7 @@ import type { UserAthI } from '@/data/data.interfaces'
 const props = defineProps<{
     user: UserAthI,
 }>()
+
 </script>
 <template>
     <div class="bg-white grid place-content-center p-6 shadow">

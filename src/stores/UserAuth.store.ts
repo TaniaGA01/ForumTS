@@ -11,7 +11,8 @@ export const UseUserAuthStore = defineStore('UserAuthStore', {
         return{
             users: allUsers.users,
             // authId: 'jVa6Go6Nl1Urkag1R2p9CHTf4ny1'
-            authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'
+            // authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'
+            authId: 'ALXhxjwgY9PinwNGHpfai6OWyDu2'
         }
     },
     getters:{
@@ -22,14 +23,16 @@ export const UseUserAuthStore = defineStore('UserAuthStore', {
             const threadsStore = UseThreadsStore()
             const postsStore = UsePostsStore()
 
+            const userThreads = threadsStore.threads.filter(thread => thread.userId === user.id) as ThreadI[]
+            const userPosts = postsStore.posts.filter(post => post.userId === user.id) as PostI[]
+
             return{
                 ...user,
-                get Threads(){
-                    return threadsStore.threads.filter(thread => thread.userId === user.id) as ThreadI[]
+                get UserThreads(){
+                    return userThreads
                 },
-
-                get Posts(){
-                    return postsStore.posts.filter(post => post.userId === user.id) as PostI[]
+                get UserPosts(){
+                    return userPosts
                 }
             }
         }

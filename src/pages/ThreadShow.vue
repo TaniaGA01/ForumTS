@@ -5,6 +5,10 @@ import { UsePostsStore } from '@/stores/Posts.store'
 import { UseUserStore } from '@/stores/Users.store'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
+import { findBySameId, itemCounter } from '@/helpers'
+import AppDate from '@/components/AppDate.vue'
+import { computed } from 'vue'
+
 const route = useRoute()
 
 const { threadsData } = storeToRefs(UseThreadsStore())
@@ -12,7 +16,11 @@ const { threadsData } = storeToRefs(UseThreadsStore())
 const thread = threadsData.value.Thread(route.params.id as string)
 const threadPosts = threadsData.value.ThreadPost(route.params.id as string)
 
-const getUsers = UseUserStore()
+const postsCounter = computed(() => itemCounter(thread.value.posts))
+const contributorCounter = computed(() => itemCounter(thread.value.contributors))
+
+const usersStore = UseUserStore()
+const author = findBySameId(usersStore.users, thread.value.userId)
 
 const postsStore = UsePostsStore()
 const addPost = (data: PostI): void => {
@@ -35,6 +43,15 @@ const addPost = (data: PostI): void => {
             </RouterLink>   
         </div>
     </div>
-    <PostsList :threadPosts="threadPosts" :users="getUsers.users" />
+    <div class="sm:flex justify-between my-8">
+            <p class="text-slate-600">
+                By <a href="#" class="uppercase text-lg font-semibold">{{ author.name }}</a>, 
+                <AppDate :timestamp="thread.publishedAt" />.
+            </p>
+            <span class="hide-mobile text-faded text-small">
+                {{ postsCounter - 1 }} replies by {{ contributorCounter }} contributors
+            </span>
+        </div>
+    <PostsList :threadPosts="threadPosts" :users="usersStore.users" />
     <PostEditor @newPostData="addPost" />
 </template>

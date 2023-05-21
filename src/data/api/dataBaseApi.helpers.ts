@@ -1,12 +1,10 @@
-import * as allPosts from './postsApi';
-import type { PostI } from '@/data/data.interfaces'
+import * as dataBase from './dataBaseApi'
 
 export default class service {
-    getPosts = async (): Promise<PostI[] | any> => {
+    getDataBase = async (data:any): Promise<any> => {
       try {
-        const response = await allPosts.allPosts()
-        return response as PostI[]
-        
+        const response = await dataBase.allDataBases(data)
+        return response
       } catch (error) {
         let message:string = 'Unknown Error'
         if (error instanceof Error) message = error.message

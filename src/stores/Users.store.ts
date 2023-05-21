@@ -1,14 +1,12 @@
 import { defineStore } from "pinia";
 import type { UserI } from '@/data/data.interfaces'
-import UsersServices from '@/data/api/usersApi.helper'
+import DataBaseServices from '@/data/api/dataBaseApi.helpers'
 import { reactive } from "vue";
-const userServices = new UsersServices()
-const users = reactive<UserI[]>(await userServices.getUsers())
+const dataBaseServices = new DataBaseServices()
+const users = reactive<UserI[]>(await dataBaseServices.getDataBase('users'))
 
 export const UseUserStore = defineStore('UserStore', {
-
     state:() => {
-        
         return{
             users:users
         }

@@ -1,21 +1,21 @@
 import { initializeApp } from "firebase/app";
 import firebaseConfig from '@/config/firebase'
 import { getFirestore, collection, getDocs, Firestore } from 'firebase/firestore/lite';
-import type { ForumElementI } from '@/data/data.interfaces'
 
 const app = initializeApp(firebaseConfig);
 const db:Firestore = getFirestore(app);
-const dataBase = collection(db, 'forums')
 
-export const allForums = async (): Promise<unknown> => {
+export const allDataBases = async (data: any): Promise<unknown> => {
+  
+  const dataBase = collection(db, data)
     try{
-        const getForums = await getDocs(dataBase);
-        const forumsList = getForums.docs.map((doc) => {
-          const forum = {...doc.data(), id: doc.id} //get id item
-          return forum
+        const getDataBases = await getDocs(dataBase);
+        const DataBasesList = getDataBases.docs.map((doc) => {
+          const dataBase = {...doc.data(), id: doc.id} //get id item
+          return dataBase
         })
         
-        return forumsList as ForumElementI[]
+        return DataBasesList
 
       } catch(error) {
         let message:string = 'Unknown Error'

@@ -1,11 +1,11 @@
 import { defineStore } from "pinia";
 import { computed, reactive, ref } from "vue";
-import ForumServices from '@/data/api/forumsApi.helper'
 import type { ForumElementI } from '@/data/data.interfaces'
 import { UseThreadsStore } from "./Threads.store";
 import { findBySameId } from "@/helpers";
-const forumServices = new ForumServices()
-const forums = reactive<ForumElementI[]>(await forumServices.getForums())
+import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+const dataBaseServices = new DataBaseServices()
+const forums = reactive<ForumElementI[]>(await dataBaseServices.getDataBase('forums'))
 
 export const UseForumStore = defineStore('ForumStore', {
     state:() => {

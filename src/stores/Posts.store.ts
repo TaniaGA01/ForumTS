@@ -1,12 +1,12 @@
 import { defineStore } from "pinia";
 import { computed, reactive } from "vue";
-import PostServices from '@/data/api/postsApi.helper'
 import type { EditedI, PostI } from '@/data/data.interfaces'
 import { UseThreadsStore } from '@/stores/Threads.store'
 import { UseUserAuthStore } from '@/stores/UserAuth.store'
 import { findBySameId, replaceItem } from "@/helpers";
-const postServices = new PostServices()
-const posts = reactive<PostI[]>(await postServices.getPosts())
+import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+const dataBaseServices = new DataBaseServices()
+const posts = reactive<PostI[]>(await dataBaseServices.getDataBase('posts'))
 
 export const UsePostsStore = defineStore('PostsStore', {
     state:() => {

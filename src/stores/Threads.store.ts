@@ -1,20 +1,18 @@
 import { defineStore } from "pinia";
 import { reactive } from "vue";
-// import sourceData from '@/data/data.json';
-import ThreadServices from '@/data/api/threadsApi.helper'
 import type { ThreadI } from '@/data/data.interfaces'
 import { UseUserAuthStore } from "./UserAuth.store";
 import { UseForumStore } from "./Forums.store";
 import { computed } from 'vue';
 import { UsePostsStore } from '@/stores/Posts.store'
 import { findBySameId } from "@/helpers";
-const threadServices = new ThreadServices()
-const threads = reactive<ThreadI[]>(await threadServices.getThreads())
+import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+const dataBaseServices = new DataBaseServices()
+const threads = reactive<ThreadI[]>(await dataBaseServices.getDataBase('threads'))
 
 export const UseThreadsStore = defineStore('ThreadsStore', {
     state:() => {
         return{
-            // ...sourceData.threads,
             threads:threads,
             threadId:''
         }

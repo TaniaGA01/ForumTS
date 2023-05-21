@@ -1,14 +1,16 @@
 import { defineStore } from "pinia";
 import { reactive } from "vue";
-import sourceData from '@/data/data.json';
-import type { CategoryI} from '@/data/data.interfaces'
+import CategoriesServices from '@/data/api/categoriesApi.helpers'
+import type { CategoryI } from '@/data/data.interfaces'
 import { findBySameId } from "@/helpers";
 import { UseForumStore } from "./Forums.store";
+const categorieServices = new CategoriesServices()
+const categories = reactive<CategoryI[]>(await categorieServices.getUsers())
 
 export const UseCategoriesStore = defineStore('CategoriesStore', {
     state:() => {
         return{
-            categories: reactive<CategoryI[]>(sourceData.categories)
+            categories: categories
         }
     },
     getters:{

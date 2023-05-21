@@ -1,21 +1,22 @@
 import { defineStore } from "pinia";
 import { computed, reactive } from "vue";
-import sourceData from '@/data/data.json';
-import type { EditedI, PostI, ThreadI } from '@/data/data.interfaces'
+import PostServices from '@/data/api/postsApi.helper'
+import type { EditedI, PostI } from '@/data/data.interfaces'
 import { UseThreadsStore } from '@/stores/Threads.store'
 import { UseUserAuthStore } from '@/stores/UserAuth.store'
 import { findBySameId, replaceItem } from "@/helpers";
+const postServices = new PostServices()
+const posts = reactive<PostI[]>(await postServices.getPosts())
 
 export const UsePostsStore = defineStore('PostsStore', {
     state:() => {
         return{
-            posts: reactive<PostI[]>(sourceData.posts),
-            threads:reactive<ThreadI[]>(sourceData.threads),
+            posts: posts,
+            threads:UseThreadsStore().threads,
         }
     },
     getters:{
         postsData:(state) => {
-
             const post = (route:string) => computed(() => state.posts.find(post => post.threadId === route))
 
             const postsByUser = (userId: string) => computed(() => state.posts.filter(post => post.userId === userId)) 

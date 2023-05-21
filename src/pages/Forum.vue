@@ -12,11 +12,11 @@ const route = useRoute()
 
 const { forumsData } = storeToRefs(UseForumStore())
 
-const getUsers = UseUserStore()
+const users = reactive(UseUserStore().users)
 
 const forum = forumsData.value.Forum(route.params.id as string)
-
 const threads = forumsData.value.Threads(route.params.id as string)
+
 
 const breadcrumbs = [
     {
@@ -73,5 +73,5 @@ const breadcrumbs = [
                 Start a thread
         </RouterLink>  
     </div>
-    <ThreadList :threads="threads" :users="getUsers.users" />
+    <ThreadList :threads="threads" :users="users" />
 </template>

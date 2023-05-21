@@ -27,3 +27,4 @@ env.d.ts
 *.njsproj
 *.sln
 *.sw?
+serviceAccount.json

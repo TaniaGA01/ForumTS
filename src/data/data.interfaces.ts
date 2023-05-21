@@ -132,3 +132,10 @@ export interface UserAthI {
     twitter?:      string;
     website?:      string;
 }
+export interface UsersAPIError{
+    message:       string
+}
+export interface UserAPIInterface{
+    datas:         UserI[],
+    status:        boolean;
+}

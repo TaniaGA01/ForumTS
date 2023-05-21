@@ -4,12 +4,13 @@ import { UseThreadsStore } from "./Threads.store";
 import { UsePostsStore } from "./Posts.store";
 import { UseUserStore } from "@/stores/Users.store"
 import { findBySameId, replaceItem } from "@/helpers";
+import { reactive, ref } from 'vue';
 
 export const UseUserAuthStore = defineStore('UserAuthStore', {
     state:() => {
-        const allUsers = UseUserStore()
+        const users = ref(UseUserStore().users)
         return{
-            users: allUsers.users,
+            users: users.value,
             // authId: 'jVa6Go6Nl1Urkag1R2p9CHTf4ny1'
             authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'
             // authId: 'ALXhxjwgY9PinwNGHpfai6OWyDu2'
@@ -17,6 +18,7 @@ export const UseUserAuthStore = defineStore('UserAuthStore', {
     },
     getters:{
         authUser: (state) => {
+
             const user =  findBySameId(state.users, state.authId) as UserI | UserAthI
             if(!user) return null
 

@@ -29,3 +29,4 @@ env.d.ts
 *.sw?
 serviceAccount.json
 firebase.ts
+firebaseConfig.ts

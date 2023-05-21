@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { initializeApp } from "firebase/app";
-import firebaseConfig from '@/config/firebase'
+import firebaseConfig from '@/config/firebaseConfig'
 import App from './App.vue'
 import router from './router'
 

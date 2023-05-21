@@ -28,3 +28,4 @@ env.d.ts
 *.sln
 *.sw?
 serviceAccount.json
+firebase.ts

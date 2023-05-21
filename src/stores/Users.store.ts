@@ -6,7 +6,9 @@ const dataBaseServices = new DataBaseServices()
 const users = reactive<UserI[]>(await dataBaseServices.getDataBase('users'))
 
 export const UseUserStore = defineStore('UserStore', {
+
     state:() => {
+        
         return{
             users:users
         }

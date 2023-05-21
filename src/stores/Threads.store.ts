@@ -1,9 +1,8 @@
 import { defineStore } from "pinia";
-import { reactive } from "vue";
+import { reactive,computed } from "vue";
 import type { ThreadI } from '@/data/data.interfaces'
 import { UseUserAuthStore } from "./UserAuth.store";
 import { UseForumStore } from "./Forums.store";
-import { computed } from 'vue';
 import { UsePostsStore } from '@/stores/Posts.store'
 import { findBySameId } from "@/helpers";
 import DataBaseServices from '@/data/api/dataBaseApi.helpers'
@@ -41,11 +40,10 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
             newThreadData.contributors = [],
             newThreadData.firstPostId = '',
             newThreadData.userId = UseUserAuthStore().authId
-            newThreadData.publishedAt = 0,// date in seconds
-            newThreadData.lastPostAt =    0,
+            newThreadData.publishedAt =  Math.floor(Date.now() / 1000),// date in seconds
+            newThreadData.lastPostAt =   Math.floor(Date.now() / 1000),
             newThreadData.lastPostId =    '',
             newThreadData.posts =        [],
-            newThreadData.publishedAt =   0,
             newThreadData.slug=          '',
 
             // add thread to threads
@@ -67,7 +65,7 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
             createPost({
                 text: content,
                 threadId: newThreadData.id,
-                publishedAt: 0,
+                publishedAt: Math.floor(Date.now() / 1000),
                 userId: "",
                 id: ""
             });
@@ -83,14 +81,12 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
 
             const findPost = user?.UserPosts.find(post => post.threadId === editThreadData.id)
 
-            
-
             const { editPost } = UsePostsStore();
             
             editPost({
                 text: content,
                 threadId: editThreadData.id,
-                publishedAt: 0,
+                publishedAt: editThreadData.lastPostAt,
                 userId: findPost?.userId as string,
                 id: findPost?.id as string
             });

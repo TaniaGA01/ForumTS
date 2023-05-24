@@ -24,6 +24,8 @@ const author = findBySameId(usersStore.users, thread.value.userId)
 
 const postsStore = UsePostsStore()
 
+
+
 const addPost = (data: PostI): void => {
     const newPost = {
         ...data

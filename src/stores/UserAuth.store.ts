@@ -4,7 +4,7 @@ import { UseThreadsStore } from "./Threads.store";
 import { UsePostsStore } from "./Posts.store";
 import { UseUserStore } from "@/stores/Users.store"
 import { findBySameId, replaceItem } from "@/helpers";
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 
 export const UseUserAuthStore = defineStore('UserAuthStore', {
     state:() => {

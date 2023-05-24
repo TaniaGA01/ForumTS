@@ -5,7 +5,7 @@ import router from "@/router";
 import { UseThreadsStore } from '@/stores/Threads.store';
 import { UsePostsStore } from '@/stores/Posts.store'
 import { UseForumStore } from '@/stores/Forums.store'
-import { storeToRefs } from 'pinia';
+import { storeToRefs,  } from 'pinia';
 
 const emit = defineEmits([
     'content', 'text',

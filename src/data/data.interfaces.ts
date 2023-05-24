@@ -41,7 +41,7 @@ export interface EditedI {
 }
 
 export interface ReactionsI {
-    "❤️"?:           EmptyI;
+    "❤️"?:            EmptyI;
     "\ud83d\udc4e"?: ReactionsClassI;
     "\ud83d\udc4d"?: ClassI;
     "\ud83d\udca9"?: PurpleI;

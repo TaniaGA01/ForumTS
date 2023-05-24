@@ -2,12 +2,14 @@
 import dayjs from "dayjs"
 import relativeTime from 'dayjs/plugin/relativeTime'
 import localizedDate from 'dayjs/plugin/localizedFormat'
+import { computed } from "vue"
 dayjs.extend(relativeTime)
 dayjs.extend(localizedDate)
 
 const props = defineProps({
-    timestamp: Number
+    timestamp: [Number, Object]
 });
+            
 const diffForHumans = (): string => { // converting date
     return dayjs.unix(props.timestamp as number).fromNow()
 }

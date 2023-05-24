@@ -1,21 +1,21 @@
 import { initializeApp } from "firebase/app";
 import firebaseConfig from '@/config/firebaseConfig'
-import { getFirestore, collection, getDocs, Firestore } from 'firebase/firestore/lite';
+import * as firestone from 'firebase/firestore';
 
 const app = initializeApp(firebaseConfig);
-const db:Firestore = getFirestore(app);
+export const db:firestone.Firestore = firestone.getFirestore(app)
 
-export const allDataBases = async (data: any): Promise<unknown> => {
+export const allDataBases = async (data: any): Promise<any> => {
   
-  const dataBase = collection(db, data)
     try{
-        const getDataBases = await getDocs(dataBase);
-        const DataBasesList = getDataBases.docs.map((doc) => {
-          const dataBase = {...doc.data(), id: doc.id} //get id item
-          return dataBase
+        const dataBase = firestone.collection(db, data)
+        const getDataBase = await firestone.getDocs(dataBase);
+        const dataBaseList = getDataBase.docs.map((doc) => {
+          const bdd = {...doc.data(), id: doc.id} 
+          return bdd
         })
         
-        return DataBasesList
+        return dataBaseList
 
       } catch(error) {
         let message:string = 'Unknown Error'
@@ -24,4 +24,6 @@ export const allDataBases = async (data: any): Promise<unknown> => {
             message: message
         }
       }
+
 }
+

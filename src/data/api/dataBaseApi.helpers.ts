@@ -1,5 +1,6 @@
 import * as dataBase from './dataBaseApi'
 
+
 export default class service {
     getDataBase = async (data:any): Promise<any> => {
       try {

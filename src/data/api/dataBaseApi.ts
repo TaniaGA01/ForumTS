@@ -15,7 +15,7 @@ export const allDataBases = async (data: any): Promise<any> => {
           return bdd
         })
         
-        return dataBaseList
+        return dataBaseList.sort()
 
       } catch(error) {
         let message:string = 'Unknown Error'

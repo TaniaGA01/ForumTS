@@ -1,17 +1,29 @@
 
 import { defineStore } from "pinia";
-import { computed, reactive } from "vue";
+import { computed, reactive, ref } from "vue";
 import type { EditedI, PostI } from '@/data/data.interfaces'
 import { UseThreadsStore } from '@/stores/Threads.store'
 import { UseUserAuthStore } from '@/stores/UserAuth.store'
 import { findBySameId, replaceItem, timestampfromServer } from "@/helpers";
-import DataBaseServices from '@/data/api/dataBaseApi.helpers'
-import { db } from "@/data/api/dataBaseApi";
 import * as firestone from 'firebase/firestore';
+import { initializeApp } from "firebase/app";
+import firebaseConfig from '@/config/firebaseConfig'
 
-const dataBaseServices = new DataBaseServices()
-const posts = reactive<PostI[]>(await dataBaseServices.getDataBase('posts'))
+const app = initializeApp(firebaseConfig);
+const db:firestone.Firestore = firestone.getFirestore(app)
+const posts = ref<PostI[]>([])
 
+const dataBase = firestone.query(
+    firestone.collection(db, 'posts'), 
+    firestone.orderBy('publishedAt')
+)
+firestone.onSnapshot(dataBase, (querySnapshot) => {
+    const dataBaseList = ref<any[]>([]);
+    querySnapshot.forEach((doc) => {
+        dataBaseList.value.push({ ...doc.data(), id: doc.id });
+    });
+    return posts.value = dataBaseList.value;
+});
 
 export const UsePostsStore = defineStore('PostsStore', {
     state:() => {
@@ -74,8 +86,6 @@ export const UsePostsStore = defineStore('PostsStore', {
                 (i: boolean) => i === true
             )
 
-            this.posts.push(newPost) //display in front
-
             //to create in database
             const batch = firestone.writeBatch(db)
             const postRef = firestone.doc(firestone.collection(db, "posts"))
@@ -86,7 +96,6 @@ export const UsePostsStore = defineStore('PostsStore', {
             )
             
             if(findExistingContributor === -1 ){ //if contributor does not existing
-                thread?.contributors.push(UseUserAuthStore().authId) //display in front
 
                 //to update in database
                 const threadRef = firestone.doc(db, "threads", thread?.id)
@@ -94,8 +103,6 @@ export const UsePostsStore = defineStore('PostsStore', {
                     contributors: firestone.arrayUnion(UseUserAuthStore().authId)
                 });
             }
-
-            thread?.posts.push(newPost.id) //display in front
 
             //to update in database
             const threadRef = firestone.doc(db, "threads", thread?.id)

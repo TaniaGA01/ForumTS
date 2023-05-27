@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import { reactive,computed, ref } from "vue";
-import type { ThreadI, UserI } from '@/data/data.interfaces'
+import { computed, ref } from "vue";
+import type { ThreadI } from '@/data/data.interfaces'
 import { UseUserAuthStore } from "./UserAuth.store";
 import { UseForumStore } from "./Forums.store";
 import { UsePostsStore } from '@/stores/Posts.store'

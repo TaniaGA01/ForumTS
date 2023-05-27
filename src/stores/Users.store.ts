@@ -7,7 +7,7 @@ import firebaseConfig from '@/config/firebaseConfig'
 
 const app = initializeApp(firebaseConfig);
 const db:firestone.Firestore = firestone.getFirestore(app)
-const users = ref<UserI[]>([])
+const allUsers = ref<UserI[]>([])
 
 const dataBase = firestone.collection(db, 'users')
 firestone.onSnapshot(dataBase, (querySnapshot) => {
@@ -15,15 +15,17 @@ firestone.onSnapshot(dataBase, (querySnapshot) => {
     querySnapshot.forEach((doc) => {
         dataBaseList.value.push({ ...doc.data(), id: doc.id });
     });
-    return users.value = dataBaseList.value;
+    allUsers.value = dataBaseList.value 
+    console.log('tr', allUsers.value)
+    return allUsers.value
 });
 
 export const UseUserStore = defineStore('UserStore', {
 
     state:() => {
-        
+        console.log('hi', allUsers.value)
         return{
-            users:users
+            users: allUsers
         }
     },
     getters:{

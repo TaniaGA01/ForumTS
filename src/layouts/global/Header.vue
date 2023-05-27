@@ -3,6 +3,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import { RouterLink } from 'vue-router'
 import { UseUserAuthStore } from '@/stores/UserAuth.store'
+import { storeToRefs } from "pinia"
 
 const navigation = [
     { name: 'Home', href: '/', current: true },
@@ -10,7 +11,7 @@ const navigation = [
     { name: 'Forum', href: '#', current: false },
     { name: 'Thread', href: '#', current: false },
 ]
-const usersStore = UseUserAuthStore()
+const usersStore = storeToRefs(UseUserAuthStore())
 const user = usersStore.authUser
 </script>
 <template>

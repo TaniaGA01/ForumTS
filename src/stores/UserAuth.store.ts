@@ -1,16 +1,15 @@
-import { defineStore } from "pinia";
+import { defineStore, storeToRefs } from "pinia";
 import type { PostI, ThreadI, UserI, UserAthI } from '@/data/data.interfaces'
 import { UseThreadsStore } from "./Threads.store";
 import { UsePostsStore } from "./Posts.store";
 import { UseUserStore } from "@/stores/Users.store"
 import { findBySameId, replaceItem } from "@/helpers";
-import { ref } from 'vue';
 
 export const UseUserAuthStore = defineStore('UserAuthStore', {
     state:() => {
-        const users = ref(UseUserStore().users)
+        const users = storeToRefs(UseUserStore()).users
         return{
-            users: users.value,
+            users: users,
             // authId: 'jVa6Go6Nl1Urkag1R2p9CHTf4ny1'
             authId: 'VXjpr2WHa8Ux4Bnggym8QFLdv5C3'
             // authId: 'ALXhxjwgY9PinwNGHpfai6OWyDu2'
@@ -21,7 +20,7 @@ export const UseUserAuthStore = defineStore('UserAuthStore', {
 
             const user =  findBySameId(state.users, state.authId) as UserI | UserAthI
             if(!user) return null
-
+            
             const threadsStore = UseThreadsStore()
             const postsStore = UsePostsStore()
 

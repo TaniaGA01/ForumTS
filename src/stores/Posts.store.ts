@@ -1,6 +1,6 @@
 
 import { defineStore } from "pinia";
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 import type { EditedI, PostI } from '@/data/data.interfaces'
 import { UseThreadsStore } from '@/stores/Threads.store'
 import { UseUserAuthStore } from '@/stores/UserAuth.store'
@@ -46,8 +46,6 @@ export const UsePostsStore = defineStore('PostsStore', {
             const threads = (userId:string) => computed(() => 
                 threadsData.threads.filter(thread => thread.userId === userId)
             )
-
-            
 
             return{
                 get Post(){

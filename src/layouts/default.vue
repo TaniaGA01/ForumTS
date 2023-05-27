@@ -5,10 +5,10 @@ import Footer from '../layouts/global/Footer.vue';
 
 <template>
     <Header />
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <slot />
     </div>
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12">
         <hr>
         <Footer class="mt-5"/>
     </div>

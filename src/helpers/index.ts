@@ -1,5 +1,4 @@
 import * as firestone from 'firebase/firestore'; 
-import { computed } from 'vue';
 
 export const findBySameId = (resources: any[], id: any) => 
 resources.find( r => r.id === id)
@@ -16,7 +15,6 @@ export const itemCounter = (resource:any[]) =>{
     }else{
         return resource?.length
     }
-
 }
 
 export const timestampfromServer = (date: any) => {

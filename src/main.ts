@@ -12,14 +12,7 @@ const forumApp = createApp(App)
 forumApp.use(createPinia())
 forumApp.use(router)
 
-const firebaseApp = initializeApp(firebaseConfig);
 
-forumApp
-  .use(VueFire, {
-    firebaseApp,
-    modules: [
-      VueFireAuth(),
-    ],
-  })
+
 
 forumApp.mount('#app')

@@ -4,12 +4,10 @@ import type { CategoryI } from '@/data/data.interfaces'
 import { findBySameId } from "@/helpers";
 import { UseForumStore } from "./Forums.store";
 import * as firestone from 'firebase/firestore';
-import { initializeApp } from "firebase/app";
-import firebaseConfig from '@/config/firebaseConfig'
-
-const app = initializeApp(firebaseConfig);
-const db:firestone.Firestore = firestone.getFirestore(app)
-const categories = ref<CategoryI[]>([])
+import { db } from '@/data/api/dataBaseApi'
+import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+const dataBaseServices = new DataBaseServices()
+const categories = ref<CategoryI[]>(await dataBaseServices.getDataBase('categories'))
 
 const dataBase = firestone.collection(db, 'categories')
 firestone.onSnapshot(dataBase, (querySnapshot) => {

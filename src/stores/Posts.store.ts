@@ -6,12 +6,10 @@ import { UseThreadsStore } from '@/stores/Threads.store'
 import { UseUserAuthStore } from '@/stores/UserAuth.store'
 import { findBySameId, replaceItem, timestampfromServer } from "@/helpers";
 import * as firestone from 'firebase/firestore';
-import { initializeApp } from "firebase/app";
-import firebaseConfig from '@/config/firebaseConfig'
-
-const app = initializeApp(firebaseConfig);
-const db:firestone.Firestore = firestone.getFirestore(app)
-const posts = ref<PostI[]>([])
+import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+import { db } from '@/data/api/dataBaseApi'
+const dataBaseServices = new DataBaseServices()
+const posts = ref<PostI[]>(await dataBaseServices.getDataBase('posts'))
 
 const dataBase = firestone.query(
     firestone.collection(db, 'posts'), 
@@ -24,6 +22,7 @@ firestone.onSnapshot(dataBase, (querySnapshot) => {
     });
     return posts.value = dataBaseList.value;
 });
+
 
 export const UsePostsStore = defineStore('PostsStore', {
     state:() => {
@@ -108,7 +107,7 @@ export const UsePostsStore = defineStore('PostsStore', {
                 posts: firestone.arrayUnion(postRef.id)
             });
 
-            //write in database
+            //write all batch in database
             await batch.commit()
 
         },

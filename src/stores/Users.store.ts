@@ -2,12 +2,10 @@ import { defineStore } from "pinia";
 import type { UserI } from '@/data/data.interfaces'
 import { ref } from "vue";
 import * as firestone from 'firebase/firestore';
-import { initializeApp } from "firebase/app";
-import firebaseConfig from '@/config/firebaseConfig'
-
-const app = initializeApp(firebaseConfig);
-const db:firestone.Firestore = firestone.getFirestore(app)
-const allUsers = ref<UserI[]>([])
+import { db } from '@/data/api/dataBaseApi'
+import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+const dataBaseServices = new DataBaseServices()
+const allUsers = ref<UserI[]>(await dataBaseServices.getDataBase('users'))
 
 const dataBase = firestone.collection(db, 'users')
 firestone.onSnapshot(dataBase, (querySnapshot) => {
@@ -16,14 +14,12 @@ firestone.onSnapshot(dataBase, (querySnapshot) => {
         dataBaseList.value.push({ ...doc.data(), id: doc.id });
     });
     allUsers.value = dataBaseList.value 
-    console.log('tr', allUsers.value)
     return allUsers.value
 });
 
 export const UseUserStore = defineStore('UserStore', {
 
     state:() => {
-        console.log('hi', allUsers.value)
         return{
             users: allUsers
         }

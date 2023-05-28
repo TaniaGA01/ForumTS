@@ -4,12 +4,10 @@ import type { ForumElementI } from '@/data/data.interfaces'
 import { UseThreadsStore } from "./Threads.store";
 import { findBySameId } from "@/helpers";
 import * as firestone from 'firebase/firestore';
-import { initializeApp } from "firebase/app";
-import firebaseConfig from '@/config/firebaseConfig'
-
-const app = initializeApp(firebaseConfig);
-const db:firestone.Firestore = firestone.getFirestore(app)
-const forums = ref<ForumElementI[]>([])
+import { db } from '@/data/api/dataBaseApi'
+import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+const dataBaseServices = new DataBaseServices()
+const forums = ref<ForumElementI[]>(await dataBaseServices.getDataBase('forums'))
 
 const dataBase = firestone.collection(db, 'forums')
 firestone.onSnapshot(dataBase, (querySnapshot) => {

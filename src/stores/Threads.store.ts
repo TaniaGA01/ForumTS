@@ -6,12 +6,10 @@ import { UseForumStore } from "./Forums.store";
 import { UsePostsStore } from '@/stores/Posts.store'
 import { findBySameId } from "@/helpers";
 import * as firestone from 'firebase/firestore';
-import { initializeApp } from "firebase/app";
-import firebaseConfig from '@/config/firebaseConfig'
-
-const app = initializeApp(firebaseConfig);
-const db:firestone.Firestore = firestone.getFirestore(app)
-const threads = ref<ThreadI[]>([])
+import { db } from '@/data/api/dataBaseApi'
+import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+const dataBaseServices = new DataBaseServices()
+const threads = ref<ThreadI[]>(await dataBaseServices.getDataBase('threads'))
 
 const dataBase = firestone.collection(db, 'threads')
 firestone.onSnapshot(dataBase, (querySnapshot) => {
@@ -21,7 +19,6 @@ firestone.onSnapshot(dataBase, (querySnapshot) => {
     });
     return threads.value = dataBaseList.value;
 });
-
 
 export const UseThreadsStore = defineStore('ThreadsStore', {
     state:() => {

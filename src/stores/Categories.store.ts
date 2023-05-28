@@ -1,14 +1,17 @@
 import { defineStore } from "pinia";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import type { CategoryI } from '@/data/data.interfaces'
 import { findBySameId } from "@/helpers";
 import { UseForumStore } from "./Forums.store";
 import * as firestone from 'firebase/firestore';
 import { db } from '@/data/api/dataBaseApi'
 import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+
+// get asynchronic dataBase
 const dataBaseServices = new DataBaseServices()
 const categories = ref<CategoryI[]>(await dataBaseServices.getDataBase('categories'))
 
+//Real-time database update
 const dataBase = firestone.collection(db, 'categories')
 firestone.onSnapshot(dataBase, (querySnapshot) => {
     const dataBaseList = ref<any[]>([]);

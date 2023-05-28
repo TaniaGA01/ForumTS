@@ -6,9 +6,12 @@ import { findBySameId } from "@/helpers";
 import * as firestone from 'firebase/firestore';
 import { db } from '@/data/api/dataBaseApi'
 import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+
+// get asynchronic dataBase
 const dataBaseServices = new DataBaseServices()
 const forums = ref<ForumElementI[]>(await dataBaseServices.getDataBase('forums'))
 
+//Real-time database update
 const dataBase = firestone.collection(db, 'forums')
 firestone.onSnapshot(dataBase, (querySnapshot) => {
     const dataBaseList = ref<any[]>([]);

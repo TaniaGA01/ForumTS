@@ -8,9 +8,12 @@ import { findBySameId, replaceItem, timestampfromServer } from "@/helpers";
 import * as firestone from 'firebase/firestore';
 import DataBaseServices from '@/data/api/dataBaseApi.helpers'
 import { db } from '@/data/api/dataBaseApi'
+
+// get asynchronic dataBase
 const dataBaseServices = new DataBaseServices()
 const posts = ref<PostI[]>(await dataBaseServices.getDataBase('posts'))
 
+//Real-time database update
 const dataBase = firestone.query(
     firestone.collection(db, 'posts'), 
     firestone.orderBy('publishedAt')

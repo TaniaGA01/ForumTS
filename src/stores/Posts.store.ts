@@ -113,23 +113,23 @@ export const UsePostsStore = defineStore('PostsStore', {
 
         },
         
-        editPost(postEdit:PostI){
+        async editPost(postEdit:PostI){
 
             const findPostToEdit = this.posts.find(
                 (oldPost: { threadId: string; }) => oldPost.threadId === postEdit.threadId
             ) as PostI
-            
-            postEdit.edited = {
-                at: findPostToEdit.edited?.at,
-                by: findPostToEdit.edited?.by,
-                moderated: findPostToEdit.edited?.moderated,
-            }
-            // postEdit.id = findPostToEdit?.id
-            postEdit.userId = findPostToEdit.userId
-            postEdit.publishedAt = Math.floor(Date.now() / 1000),// date in seconds
-            postEdit.reactions = undefined
 
-            // replaceItem(this.posts, postEdit)
+            const postToEdit = {...findPostToEdit}
+
+            //to create in database            
+            const batch = firestone.writeBatch(db)
+            const postsRef = firestone.doc(db, "posts", `${postToEdit.id}`)
+            batch.update(postsRef, {
+                text: postEdit.text
+            });
+
+            //write all batch in database
+            await batch.commit()
         }
     }
 })

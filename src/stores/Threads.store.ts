@@ -9,6 +9,7 @@ import * as firestone from 'firebase/firestore';
 import { db } from '@/data/api/dataBaseApi'
 import DataBaseServices from '@/data/api/dataBaseApi.helpers'
 import router from "@/router";
+import { useRoute } from "vue-router";
 
 // get asynchronic dataBase
 const dataBaseServices = new DataBaseServices()
@@ -106,26 +107,44 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
             router.push({ name : "threadShow", params:{ id: threadsRef.id } })
 
         },
-        editThread(editThreadData:ThreadI, content:string){
+        async editThread(editThreadData:ThreadI, content:string){
             
-            const findThreadToEdit = findBySameId(this.threads, editThreadData.id) as ThreadI
-            findThreadToEdit.title = editThreadData.title
+            const route = router.currentRoute.value.params.id
+
+            const findThreadToEdit = findBySameId(this.threads, route) as ThreadI
+
+            const thread = {...findThreadToEdit}
+
+            //to create in database
+            const batch = firestone.writeBatch(db)
+            const threadsRef = firestone.doc(db, "threads", `${thread.id}`)
+
+            batch.update(threadsRef, 
+            {
+                title: editThreadData.title
+            }
+            );
+            
+            //write all batch in database
+            await batch.commit()
 
             // add thread to the user
             const userAuthStore = UseUserAuthStore();
             const user = userAuthStore.authUser
 
-            const findPost = user?.UserPosts.find(post => post.threadId === editThreadData.id)
+            const findPost = user?.UserPosts.find(post => post.threadId === thread.id)
 
             const { editPost } = UsePostsStore();
             
             editPost({
                 text: content,
-                threadId: editThreadData.id,
+                threadId: thread.id,
                 publishedAt: editThreadData.lastPostAt,
                 userId: findPost?.userId as string,
                 id: findPost?.id as string
             });
+
+            router.push({ name : "threadShow", params:{ id: threadsRef.id } })
         }
     }
 })

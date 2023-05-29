@@ -43,7 +43,7 @@ const { authUser } = storeToRefs(UseUserAuthStore());
                     </div>
                     <div class="sm:w-4/5 grid content-between">
                         <p class="break-all">{{ post.text }}</p>
-                        <AppDate :timestamp="post.publishedAt"  class="text-slate-700 te"/>
+                        <AppDate :timestamp="post.publishedAt"  class="text-slate-700 text-right"/>
                     </div>
                 </div>
             </div>

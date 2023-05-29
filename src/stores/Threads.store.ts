@@ -9,7 +9,6 @@ import * as firestone from 'firebase/firestore';
 import { db } from '@/data/api/dataBaseApi'
 import DataBaseServices from '@/data/api/dataBaseApi.helpers'
 import router from "@/router";
-import { useRoute } from "vue-router";
 
 // get asynchronic dataBase
 const dataBaseServices = new DataBaseServices()

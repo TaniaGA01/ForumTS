@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { PencilIcon } from '@heroicons/vue/24/outline'
 import type { UserI, PostI } from '@/data/data.interfaces'
 import { findBySameId } from "@/helpers";
 import { UsePostsStore } from "@/stores/Posts.store"
@@ -34,9 +35,19 @@ const { postsData } = storeToRefs(UsePostsStore())
                    </div>
                 </div>
             </div>
-            <div class="col-span-5">
-                <p class="break-all text-slate-700">{{ threadPost.text }}</p>
-                <div class="text-right mt-5 break-all text-slate-600">
+            <div class="col-span-5 grid content-between">
+                <div>
+                    <div class="w-full text-right mb-3">
+                        <a 
+                        
+                        href="http://" 
+                        class="w-fit inline-flex bg-fuchsia-100 p-2 rounded-full text-fuchsia-600 hover:bg-fuchsia-600 hover:text-white">
+                            <PencilIcon class="h-4"/>
+                        </a>
+                    </div>
+                    <p class="break-all text-slate-700">{{ threadPost.text }}</p>
+                </div>
+                <div class="text-right mt-5 break-all text-slate-600 bottom-0 relative">
                     <AppDate :timestamp="threadPost.publishedAt" class="text-slate-700"/>
                 </div>
             </div>

@@ -37,7 +37,6 @@ const modeValue = () => {
     inputsValues.newId.value = thread.value.id
     inputsValues.saveBtn.value = 'Edit'
    }else{
-    inputsValues.newId.value = 'ggg' + Math.random()
     inputsValues.saveBtn.value = 'Publish'
    }
 }
@@ -45,7 +44,6 @@ const modeValue = () => {
 const save = ():void => {
 
     const newThreat: object = reactive({
-        id: inputsValues.newId.value,
         forumId: route.params.id as string,
         title:  ref(inputsValues.title.value)
     })
@@ -54,8 +52,6 @@ const save = ():void => {
 
     inputsValues.title.value = ''
     inputsValues.content.value = ''
-
-    router.push({ name : "threadShow", params:{ id: inputsValues.newId.value } })
 }
 
 const cancel = () => {

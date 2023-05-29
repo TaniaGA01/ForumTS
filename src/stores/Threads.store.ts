@@ -4,17 +4,21 @@ import type { ThreadI } from '@/data/data.interfaces'
 import { UseUserAuthStore } from "./UserAuth.store";
 import { UseForumStore } from "./Forums.store";
 import { UsePostsStore } from '@/stores/Posts.store'
-import { findBySameId } from "@/helpers";
+import { findBySameId, timestampfromServer } from "@/helpers";
 import * as firestone from 'firebase/firestore';
 import { db } from '@/data/api/dataBaseApi'
 import DataBaseServices from '@/data/api/dataBaseApi.helpers'
+import router from "@/router";
 
 // get asynchronic dataBase
 const dataBaseServices = new DataBaseServices()
 const threads = ref<ThreadI[]>(await dataBaseServices.getDataBase('threads'))
 
-//Real-time database update
-const dataBase = firestone.collection(db, 'threads')
+//Real-time database update order by published date
+const dataBase = firestone.query(
+    firestone.collection(db, 'threads'), 
+    firestone.orderBy('publishedAt')
+)
 firestone.onSnapshot(dataBase, (querySnapshot) => {
     const dataBaseList = ref<any[]>([]);
     querySnapshot.forEach((doc) => {
@@ -49,40 +53,58 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
     },
     actions:{
         // constructor
-        createThread(newThreadData:ThreadI, content:string){
+        async createThread(newThreadData:ThreadI, content:string){
 
-            newThreadData.contributors = [],
+            newThreadData.contributors = [UseUserAuthStore().authId],
             newThreadData.firstPostId = '',
             newThreadData.userId = UseUserAuthStore().authId
             newThreadData.publishedAt =  Math.floor(Date.now() / 1000),// date in seconds
             newThreadData.lastPostAt =   Math.floor(Date.now() / 1000),
             newThreadData.lastPostId =    '',
             newThreadData.posts =        [],
-            newThreadData.slug=          '',
+            newThreadData.slug=          ''
 
-            // add thread to threads
-            this.threads.push(newThreadData)
+            //to create in database
+            const batch = firestone.writeBatch(db)
+            const threadsRef = firestone.doc(firestone.collection(db, "threads"))
+            batch.set(
+                threadsRef, 
+                { ...newThreadData },
+                timestampfromServer(newThreadData.publishedAt)
+            )
 
             // add thread to the user
-            const userAuthStore = UseUserAuthStore();
-            const user = userAuthStore.authUser
-            user?.UserThreads.push(newThreadData);
+            const userRef = firestone.doc(db, "users", UseUserAuthStore().authId)
+            batch.update(userRef, {
+                UserThreads: firestone.arrayUnion(newThreadData)
+            });
 
             // add thread id to the forum
             const forums = UseForumStore().forums;
             const getForum = findBySameId(forums, newThreadData.forumId)
-            getForum?.threads?.push(newThreadData.id)
+            // getForum?.threads?.push(newThreadData.id)
 
-            // create the post
+            const forumRef = firestone.doc(db, "forums", getForum.id)
+            batch.update(forumRef, {
+                threads: firestone.arrayUnion(threadsRef.id)
+            });
+
+            //write all batch in database
+            await batch.commit()
+
+            // create first threads post
             const { createPost } = UsePostsStore();
             
             createPost({
                 text: content,
-                threadId: newThreadData.id,
-                publishedAt: Math.floor(Date.now() / 1000),
-                userId: "",
-                id: ""
+                threadId: threadsRef.id,
+                publishedAt: timestampfromServer(newThreadData.publishedAt),
+                userId: '',
             });
+
+            // create thread route
+            router.push({ name : "threadShow", params:{ id: threadsRef.id } })
+
         },
         editThread(editThreadData:ThreadI, content:string){
             

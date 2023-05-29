@@ -37,7 +37,7 @@ const { postsData } = storeToRefs(UsePostsStore())
             <div class="col-span-5">
                 <p class="break-all text-slate-700">{{ threadPost.text }}</p>
                 <div class="text-right mt-5 break-all text-slate-600">
-                    <AppDate :timestamp="threadPost.publishedAt"  class="text-slate-700"/>
+                    <AppDate :timestamp="threadPost.publishedAt" class="text-slate-700"/>
                 </div>
             </div>
         </div>

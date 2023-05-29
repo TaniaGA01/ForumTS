@@ -13,7 +13,7 @@ import { db } from '@/data/api/dataBaseApi'
 const dataBaseServices = new DataBaseServices()
 const posts = ref<PostI[]>(await dataBaseServices.getDataBase('posts'))
 
-//Real-time database update
+//Real-time database update order by published date
 const dataBase = firestone.query(
     firestone.collection(db, 'posts'), 
     firestone.orderBy('publishedAt')
@@ -77,15 +77,6 @@ export const UsePostsStore = defineStore('PostsStore', {
             
             const thread = findBySameId(UseThreadsStore().threads, newPost.threadId)
 
-            const userAuthStore = UseUserAuthStore();
-
-            const findThreadContributors = thread.contributors.map(
-                (contributorId: string) => contributorId === userAuthStore.authUser?.id
-            )
-            const findExistingContributor = findThreadContributors.findIndex(
-                (i: boolean) => i === true
-            )
-
             //to create in database
             const batch = firestone.writeBatch(db)
             const postRef = firestone.doc(firestone.collection(db, "posts"))
@@ -93,6 +84,13 @@ export const UsePostsStore = defineStore('PostsStore', {
                 postRef, 
                 { ...newPost },
                 timestampfromServer(newPost.publishedAt)
+            )
+
+            const findThreadContributors = thread.contributors.map(
+                (contributorId: string) => contributorId === UseUserAuthStore().authId
+            )
+            const findExistingContributor = findThreadContributors.findIndex(
+                (i: boolean) => i === true
             )
             
             if(findExistingContributor === -1 ){ //if contributor does not existing
@@ -126,12 +124,12 @@ export const UsePostsStore = defineStore('PostsStore', {
                 by: findPostToEdit.edited?.by,
                 moderated: findPostToEdit.edited?.moderated,
             }
-            postEdit.id = findPostToEdit?.id
+            // postEdit.id = findPostToEdit?.id
             postEdit.userId = findPostToEdit.userId
             postEdit.publishedAt = Math.floor(Date.now() / 1000),// date in seconds
             postEdit.reactions = undefined
 
-            replaceItem(this.posts, postEdit.id, postEdit)
+            // replaceItem(this.posts, postEdit)
         }
     }
 })

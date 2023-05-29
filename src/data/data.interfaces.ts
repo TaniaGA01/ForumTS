@@ -25,12 +25,13 @@ export interface ForumElementI {
 }
 
 export interface PostI {
+[x: string]: any;
     edited?:     EditedI;
     publishedAt: number;
     text:        string;
     threadId:    string;
     userId:      string;
-    id:          string;
+    // id:          string;
     reactions?:  ReactionsI;
 }
 

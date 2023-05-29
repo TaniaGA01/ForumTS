@@ -28,7 +28,7 @@ const { authUser } = storeToRefs(UseUserAuthStore());
                 class="block bg-violet-500 rounded-lg px-3.5 py-2.5 text-center text-md font-semibold text-white shadow-sm hover:bg-violet-600  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">See only started threads?</RouterLink>
             </div>
             <hr class="mb-5">
-            <div v-for="post in authUser?.UserPosts" :key="post.id" class="bg-white p-6 shadow mb-2 text-left">
+            <div v-for="post in authUser?.UserPosts.slice().reverse()" :key="post.id" class="bg-white p-6 shadow mb-2 text-left">
                 <div class="sm:flex">
                     <div class="sm:w-1/3 text-center">
                         <h3 class="text-fuchsia-600 text-center text-lg font-semibold mb-5">{{ authUser?.name }}</h3>
@@ -43,7 +43,7 @@ const { authUser } = storeToRefs(UseUserAuthStore());
                     </div>
                     <div class="sm:w-4/5 grid content-between">
                         <p class="break-all">{{ post.text }}</p>
-                        <p class="text-right text-sm text-slate-500">9 months ago</p>
+                        <AppDate :timestamp="post.publishedAt"  class="text-slate-700 te"/>
                     </div>
                 </div>
             </div>

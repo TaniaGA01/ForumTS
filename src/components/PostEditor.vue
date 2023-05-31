@@ -1,20 +1,45 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-const emit = defineEmits(["newPostData", "data"])
 
-let newPostText = ref('')
 
-const save = (): void => {
-    const newPost: object = reactive({
-        text: newPostText,
-        threadId: route.params.id as string,
-    })
-    emit("newPostData", newPost)
-    newPostText.value = ""
+const props = defineProps<{
+    postText:string,
+    postId:string
+}>()
+
+const emit = defineEmits([
+    "updatePostData", "updateData",
+    "newPostData", "newData",
+    
+])
+
+let newPostText = props.postText !== '' ? props.postText : ''
+
+const save = (): string => {
+
+    if(!props.postId){
+        const newPost: object = reactive({
+            text: newPostText,
+            threadId: route.params.id as string,
+        })
+        emit("newPostData", newPost)   
+        return newPostText = ''
+    }else{
+        const updatePost: object = reactive({
+            id:props.postId,
+            text: newPostText,
+            threadId: route.params.id as string,
+        })
+        console.log('updatePost', updatePost)
+        emit("updatePostData", updatePost) 
+        return newPostText = ''
+    }
+     
+    
 }
 
 </script>
@@ -33,8 +58,8 @@ const save = (): void => {
             </div>
             <div class="mt-10">
                 <button
-                    class="block w-full bg-violet-500 rounded-lg px-3.5 py-2.5 text-center text-md font-semibold text-white shadow-sm hover:bg-violet-600  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">Add
-                    your comment
+                    class="block w-full bg-violet-500 rounded-lg px-3.5 py-2.5 text-center text-md font-semibold text-white shadow-sm hover:bg-violet-600  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600">
+                    {{ props.postId ? 'Update post' : 'Submit post' }}
                 </button>
             </div>
         </form>

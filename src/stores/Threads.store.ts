@@ -100,6 +100,7 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
                 threadId: threadsRef.id,
                 publishedAt: timestampfromServer(newThreadData.publishedAt),
                 userId: '',
+                id: ""
             });
 
             // create thread route
@@ -131,11 +132,12 @@ export const UseThreadsStore = defineStore('ThreadsStore', {
             const userAuthStore = UseUserAuthStore();
             const user = userAuthStore.authUser
 
-            const findPost = user?.UserPosts.find(post => post.threadId === thread.id)
+            const findPost = user?.UserPosts.find(post => post.threadId === thread.id) // find post from auth user
 
-            const { editPost } = UsePostsStore();
+            console.log('findPost?.id', findPost?.id)
+            const { updatePost } = UsePostsStore();
             
-            editPost({
+            updatePost({
                 text: content,
                 threadId: thread.id,
                 publishedAt: editThreadData.lastPostAt,

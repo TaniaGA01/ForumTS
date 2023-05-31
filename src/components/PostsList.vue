@@ -3,7 +3,10 @@ import { PencilIcon } from '@heroicons/vue/24/outline'
 import type { UserI, PostI } from '@/data/data.interfaces'
 import { findBySameId } from "@/helpers";
 import { UsePostsStore } from "@/stores/Posts.store"
+import {UseUserAuthStore } from '@/stores/UserAuth.store'
 import { storeToRefs } from 'pinia';
+import { reactive, ref } from 'vue';
+import PostEditor from './PostEditor.vue';
 
 const props = defineProps<{
     threadPosts: PostI[],
@@ -11,11 +14,31 @@ const props = defineProps<{
     posts: PostI[]
 }>()
 
-const userById = (userId: undefined | string) => {
+const editing = reactive({
+    id : null,
+})
+
+const userById = (userId: string) => {
     return findBySameId(props.users, userId)
 }
 
 const { postsData } = storeToRefs(UsePostsStore())
+const postsStore = UsePostsStore()
+
+const usersAuthStore = UseUserAuthStore()
+
+
+const toggleEditMode = (id: null) => {
+    editing.id = id === editing.id ? null : id
+}
+
+const editPost = (data: PostI): void => {
+    const updatePost = {
+        ...data,
+    }
+    postsStore.updatePost(updatePost)
+    editing.id = null
+}
 
 </script>
 <template>
@@ -38,19 +61,29 @@ const { postsData } = storeToRefs(UsePostsStore())
             <div class="col-span-5 grid content-between">
                 <div>
                     <div class="w-full text-right mb-3">
-                        <a 
-                        
-                        href="http://" 
+                        <button v-if="threadPost.userId === usersAuthStore.authId"
+                        @click.prevent="toggleEditMode(threadPost.id as any)"
                         class="w-fit inline-flex bg-fuchsia-100 p-2 rounded-full text-fuchsia-600 hover:bg-fuchsia-600 hover:text-white">
                             <PencilIcon class="h-4"/>
-                        </a>
+                        </button>
                     </div>
-                    <p class="break-all text-slate-700">{{ threadPost.text }}</p>
+                    <PostEditor 
+                    :postText="threadPost.text"
+                    :postId="threadPost.id"
+                    @updatePostData="editPost"
+                    v-if="editing.id === threadPost.id" />
+                    <p v-else class="break-all text-slate-700">{{ threadPost.text }}</p>
                 </div>
-                <div class="text-right mt-5 break-all text-slate-600 bottom-0 relative">
+
+                <div class="text-right break-all text-slate-600 bottom-0 relative block">
+                    <small  
+                        v-if="threadPost.edited?.at"
+                        class="text-right text-slate-400">Edited
+                    </small>
+                    <br>
                     <AppDate :timestamp="threadPost.publishedAt" class="text-slate-700"/>
                 </div>
             </div>
-        </div>
+        </div> 
     </div>
 </template>

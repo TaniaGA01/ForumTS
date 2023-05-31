@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { HomeIcon } from '@heroicons/vue/20/solid'
-import type { ForumElementI, ThreadI, UserI } from '@/data/data.interfaces'
-import sourceData from '@/data/data.json'
-import { reactive,computed } from 'vue';
+import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import { UseForumStore } from '@/stores/Forums.store';
 import { storeToRefs } from 'pinia'

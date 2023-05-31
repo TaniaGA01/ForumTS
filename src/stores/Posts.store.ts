@@ -113,19 +113,28 @@ export const UsePostsStore = defineStore('PostsStore', {
 
         },
         
-        async editPost(postEdit:PostI){
+        async updatePost(postEdit:PostI){
 
+            console.log('postEdit', postEdit.id)
+            
             const findPostToEdit = this.posts.find(
-                (oldPost: { threadId: string; }) => oldPost.threadId === postEdit.threadId
+                oldPost => oldPost.id === postEdit.id && oldPost.threadId === postEdit.threadId
             ) as PostI
 
-            const postToEdit = {...findPostToEdit}
+            const postToEdit = { ...findPostToEdit} 
+
+            console.log('postToEdit', postToEdit)
 
             //to create in database            
             const batch = firestone.writeBatch(db)
             const postsRef = firestone.doc(db, "posts", `${postToEdit.id}`)
             batch.update(postsRef, {
-                text: postEdit.text
+                text: postEdit.text,
+                edited:{
+                    at: timestampfromServer(postEdit.publishedAt),
+                    by: UseUserAuthStore().authId,
+                    moderated:false
+                }
             });
 
             //write all batch in database

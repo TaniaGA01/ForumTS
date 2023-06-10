@@ -24,7 +24,7 @@ firestone.onSnapshot(dataBase, (querySnapshot) => {
 export const UseCategoriesStore = defineStore('CategoriesStore', {
     state:() => {
         return{
-            categories: categories
+            categories: categories.value
         }
     },
     getters:{

@@ -1,7 +1,24 @@
 <script setup lang="ts">
 import { UseCategoriesStore } from '@/stores/Categories.store';
 import { storeToRefs } from 'pinia';
+import { onMounted, ref } from 'vue';
+import type { CategoryI } from '@/data/data.interfaces';
+
+let ready = false
+
 const { categories } = storeToRefs(UseCategoriesStore())
+const allCategories = ref<CategoryI[]>([])
+
+const showToggle = () => {
+    setTimeout(() => {
+        allCategories.value = categories.value
+        ready = false
+    }, 3000)
+}
+
+onMounted(() => {
+    categories.value.length ? showToggle() : null
+});
 </script>
 
 <template>
@@ -9,5 +26,6 @@ const { categories } = storeToRefs(UseCategoriesStore())
         <img src="@/images/logo-forum.svg" alt="" srcset="" width="130">
         <h1 class="text-6xl font-bold text-slate-600 text-center">Welcome to the Forum</h1>
     </div>
-    <CategoryList :categories="categories"/>
+    <p v-if="ready" >loading</p>
+    <CategoryList v-else :categories="allCategories"/>
 </template>

@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     ForumList: typeof import('./src/components/ForumList.vue')['default']
     PostEditor: typeof import('./src/components/PostEditor.vue')['default']
     PostsList: typeof import('./src/components/PostsList.vue')['default']
+    Preloader: typeof import('./src/components/Preloader.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ThreadEditor: typeof import('./src/components/ThreadEditor.vue')['default']

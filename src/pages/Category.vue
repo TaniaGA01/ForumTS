@@ -17,7 +17,7 @@ const categoryByForum = categoriesData.value.ForumByCategory
         <h1 class="text-3xl mt-12 font-bold text-slate-600">{{ category?.name }}</h1>
         <hr class="mt-2 mb-12">
     </div>
-    <ForumList 
+    <ForumList
     :forums="categoryByForum(category as CategoryI)"
     :title="category?.name"
     />

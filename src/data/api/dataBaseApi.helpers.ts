@@ -4,7 +4,7 @@ import * as dataBase from './dataBaseApi'
 export default class service {
     getDataBase = async (data:any): Promise<any> => {
       try {
-        const response = await dataBase.allDataBases(data)
+        const response = dataBase.allDataBases(data)
         return response
       } catch (error) {
         let message:string = 'Unknown Error'

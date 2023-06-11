@@ -63,8 +63,8 @@ const cancel = () =>{
                 <p class="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
             </div>
             <div class="flex place-content-between mt-9 mb-5">
-                <span class="text-slate-800 ml-2">{{ user.Posts?.length }} posts</span>
-                <span class="text-slate-800 ml-2">{{ user.Threads?.length }} threads</span>
+                <span class="text-slate-800 ml-2">{{ props.user.UserPosts.length }} posts</span>
+                <span class="text-slate-800 ml-2">{{ props.user.UserThreads.length }} threads</span>
             </div>
             <hr>
             <div class="col-span-full mt-4">

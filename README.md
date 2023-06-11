@@ -2,6 +2,11 @@
 
 Vue js 3 MasterClass from VueSchool
 
+## Find here this project 
+```
+https://6486071f8c6c52354ee5bb02--regal-travesseiro-b3cd6c.netlify.app/
+```
+
 ## Project Setup
 
 ```sh

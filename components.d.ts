@@ -10,9 +10,6 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AppDate: typeof import('./src/components/AppDate.vue')['default']
-    CategorieList: typeof import('./src/components/CategorieList.vue')['default']
-    Categories: typeof import('./src/components/Categories.vue')['default']
-    CategoriesList: typeof import('./src/components/CategoriesList.vue')['default']
     CategoryList: typeof import('./src/components/CategoryList.vue')['default']
     ForumList: typeof import('./src/components/ForumList.vue')['default']
     PostEditor: typeof import('./src/components/PostEditor.vue')['default']
